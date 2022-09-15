@@ -1,1 +1,1 @@
-# Welcome To React DDD Pattern
+# Welcome To Front-End Starter, base with DDD
