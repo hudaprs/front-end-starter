@@ -1,0 +1,15 @@
+@import "./custom.scss";
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: #fff;
+  font-size: 14px;
+}
+
+#app {
+  height: 100%;
+}

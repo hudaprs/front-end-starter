@@ -1,0 +1,27 @@
+@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+    @if map-has-key($breakpoints, $name) {
+        $name: map-get($breakpoints, $name);
+    }
+    @media (min-width: $name) {
+        @content;
+    }
+}
+
+@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
+    @if map-has-key($breakpoints, $name) {
+        $name: map-get($breakpoints, $name);
+    }
+    @media (max-width: $name) {
+        @content;
+    }
+}
+
+@mixin media-query($breakpoint) {
+    @if $breakpoint == "xs" {
+        @content;
+    } @else {
+        @include media-breakpoint-up($breakpoint) {
+            @content;
+        }
+    }
+}

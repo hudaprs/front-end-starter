@@ -1,0 +1,288 @@
+@use "sass:math";
+
+// Container
+.container {
+    margin: 0 auto;
+    max-width: 100%;
+    padding-right: $container-outer-margin;
+    padding-left: $container-outer-margin;
+
+    &-fluid {
+        margin-right: auto;
+        margin-left: auto;
+        padding-right: $container-outer-margin;
+        padding-left: $container-outer-margin;
+    }
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+
+    &.reverse {
+        flex-direction: row-reverse;
+    }
+}
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+
+    & > .col,
+    & > [class*="col-"] {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+// Utils Row & Col
+@each $name, $width in $grid-breakpoints {
+    $infix: if($name == "xs", "", "-#{$name}");
+
+    .col#{$infix},
+    .col#{$infix}-auto {
+        box-sizing: border-box;
+        padding-left: $half-gutter-width;
+        padding-right: $half-gutter-width;
+        position: relative;
+        width: 100%;
+    }
+
+    @for $i from 1 through $grid-columns {
+        .col#{$infix}-#{$i} {
+            box-sizing: border-box;
+            padding-left: $half-gutter-width;
+            padding-right: $half-gutter-width;
+            position: relative;
+            width: 100%;
+        }
+    }
+
+    @include media-query($name) {
+        // default container ada diatas
+        @if $name != "xs" {
+            .container {
+                max-width: map-get($container-max-width, $name);
+            }
+        }
+
+        // Column Breakpoints
+        .col#{$infix} {
+            flex-basis: 0;
+            flex-grow: 1;
+            max-width: 100%;
+        }
+
+        // Column Auto
+        .col#{$infix}-auto {
+            padding-left: $half-gutter-width;
+            padding-right: $half-gutter-width;
+            position: relative;
+            flex: 0 0 auto;
+            width: auto;
+            padding: $half-gutter-width;
+
+            box-sizing: border-box;
+        }
+
+        // Column Breakpoints by grid length
+        @for $i from 1 through $grid-columns {
+            .col#{$infix}-#{$i} {
+                flex: 0 0 math.div(100%, $grid-columns) * $i;
+                max-width: math.div(100%, $grid-columns) * $i;
+                padding-left: $half-gutter-width;
+                padding-right: $half-gutter-width;
+                position: relative;
+                width: 100%;
+
+                box-sizing: border-box;
+            }
+        }
+
+        // Offset
+        @for $i from 0 through $grid-columns {
+            .offset#{$infix}-#{$i} {
+                @if $i == 0 {
+                    margin-left: 0;
+                } @else {
+                    margin-left: math.div(100%, $grid-columns) * $i;
+                }
+            }
+        }
+
+        // Ordering
+        .order#{$infix}.first {
+            order: -1;
+        }
+
+        @for $i from 1 through 6 {
+            .order#{$infix}-#{$i} {
+                order: $i;
+            }
+        }
+
+        .order#{$infix}.last {
+            order: $grid-columns;
+        }
+    }
+}
+
+// Utils Margin & Padding
+@each $prop, $abbrev in (margin: m, padding: p) {
+    @each $name, $width in $grid-breakpoints {
+        @include media-query($name) {
+            $infix: if($name == "xs", "-", "-#{$name}-");
+
+            @each $size, $length in $spacers {
+                .#{$abbrev}#{$infix}#{$size} {
+                    #{$prop}: $length !important;
+                }
+                .#{$abbrev}y#{$infix}#{$size},
+                .#{$abbrev}t#{$infix}#{$size} {
+                    #{$prop}-top: $length !important;
+                }
+                .#{$abbrev}y#{$infix}#{$size},
+                .#{$abbrev}b#{$infix}#{$size} {
+                    #{$prop}-bottom: $length !important;
+                }
+                .#{$abbrev}x#{$infix}#{$size},
+                .#{$abbrev}l#{$infix}#{$size} {
+                    #{$prop}-left: $length !important;
+                }
+                .#{$abbrev}x#{$infix}#{$size},
+                .#{$abbrev}r#{$infix}#{$size} {
+                    #{$prop}-right: $length !important;
+                }
+            }
+
+            .#{$abbrev}#{$infix}auto {
+                #{$prop}: auto;
+            }
+
+            .#{$abbrev}x#{$infix}auto,
+            .#{$abbrev}l#{$infix}auto {
+                #{$prop}-left: auto;
+            }
+
+            .#{$abbrev}x#{$infix}auto,
+            .#{$abbrev}r#{$infix}auto {
+                #{$prop}-right: auto;
+            }
+            .#{$abbrev}y#{$infix}auto,
+            .#{$abbrev}t#{$infix}auto {
+                #{$prop}-top: auto;
+            }
+
+            .#{$abbrev}y#{$infix}auto,
+            .#{$abbrev}b#{$infix}auto {
+                #{$prop}-bottom: auto;
+            }
+        }
+    }
+}
+
+// Utils Display
+@each $name, $width in $grid-breakpoints {
+    @include media-query($name) {
+        $infix: if($name == "xs", "", "-#{$name}");
+
+        // Display
+        @each $d in $displays {
+            .d#{$infix}-#{$d} {
+                display: #{$d} !important;
+            }
+        }
+
+        // Position
+        @each $p in $positions {
+            .p#{$infix}-#{$p} {
+                position: $p !important;
+            }
+        }
+
+        // Align
+        @each $a in $aligns {
+            .text#{$infix}-#{$a} {
+                text-align: $a !important;
+            }
+        }
+
+        // Float
+        @each $f in $floats {
+            .float#{$infix}-#{$f} {
+                float: $f !important;
+            }
+        }
+
+        // Flex Directions
+        @each $dir in $flex-directions {
+            .direction#{$infix}-#{$dir} {
+                flex-direction: $dir !important;
+            }
+        }
+
+        // Wrap
+        @each $w in $flex-wraps {
+            .wrap#{$infix}-#{$w} {
+                flex-wrap: $w !important;
+            }
+        }
+
+        // Justify Content
+        @each $i in $flex-justify-contents {
+            $prefix: "";
+            @if $i == "start" or $i == "end" {
+                $prefix: "flex-";
+            } @else if $i == "between" or $i == "around" or $i == "evenly" {
+                $prefix: "space-";
+            }
+            .justify#{$infix}-#{$i} {
+                justify-content: #{$prefix}#{$i} !important;
+            }
+        }
+
+        // Align Items
+        @each $i in $flex-align-items {
+            $prefix: "";
+            @if $i == "start" or $i == "end" {
+                $prefix: "flex-";
+            }
+            .items#{$infix}-#{$i} {
+                align-items: #{$prefix}#{$i} !important;
+            }
+        }
+    }
+}
+
+// Utils Width & Height
+.w-100 {
+    width: 100%;
+}
+
+.wm-100 {
+    min-width: 100%;
+}
+
+.wx-100 {
+    max-width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.hm-100 {
+    min-height: 100%;
+}
+
+.hx-100 {
+    max-height: 100%;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}

@@ -1,0 +1,63 @@
+// Color
+$primary-color: #165bd4;
+$primary-dark-color: darken($primary-color, 10);
+
+// Grid & Container
+$grid-columns: 12 !default;
+$grid-gutter-width: 30px !default;
+$gutter-compensation: $grid-gutter-width * 0.5;
+$half-gutter-width: $grid-gutter-width * 0.5;
+
+$grid-breakpoints: (
+  xs: 0px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+) !default;
+
+$container-max-width: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+) !default;
+
+$container-outer-margin: 15px;
+
+// Spacing
+$spacer: 1rem !default;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 3,
+  6: $spacer * 4,
+  7: $spacer * 5,
+  8: $spacer * 6,
+  9: $spacer * 7,
+  10: $spacer * 8,
+  11: $spacer * 8.5,
+  12: $spacer * 9,
+  13: $spacer * 9.5,
+  14: $spacer * 10,
+  15: $spacer * 10.5,
+  16: $spacer * 11,
+  17: $spacer * 11.5,
+  18: $spacer * 12,
+  19: $spacer * 12.5,
+  20: $spacer * 13,
+) !default;
+
+// Display
+$displays: none, inline, inline-block, block, table, table-row, table-cell, flex, inline-flex !default;
+$positions: static, relative, absolute, fixed, sticky !default;
+$aligns: center left right;
+$floats: none left right;
+$flex-directions: row, row-reverse, column, column-reverse;
+$flex-wraps: nowrap, wrap, wrap-reverse;
+$flex-default-aligns: start, end, center;
+$flex-justify-contents: join($flex-default-aligns, (between, around, evenly));
+$flex-align-items: join($flex-default-aligns, (stretch, baseline));
