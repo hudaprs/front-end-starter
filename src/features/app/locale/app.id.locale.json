@@ -1,0 +1,37 @@
+{
+  "app": {
+    "welcome": "Selamat Datang di React Starter",
+    "recover": "Pulihkan",
+    "your": "Anda",
+    "or": "Atau",
+    "and": "Dan",
+    "our": "Kami",
+    "limit": "Limit",
+    "user": {
+      "fullName": "Nama Lengkap",
+      "email": "Email",
+      "password": "Kata Sandi"
+    },
+    "social": {
+      "google": "Google",
+      "facebook": "Facebook"
+    },
+    "status": {
+      "complete": "Selesai",
+      "notComplete": "Tidak Selesai"
+    },
+    "table": {
+      "action": "Aksi"
+    },
+    "action": {
+      "edit": "Ubah",
+      "submit": "Kirim",
+      "cancel": "Gagal",
+      "update": "Perbaharui",
+      "delete": "Hapus"
+    },
+    "confirmation": {
+      "areYouSure": "Apakah Anda yakin?"
+    }
+  }
+}

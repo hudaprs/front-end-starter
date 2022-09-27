@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppBaseInput should have snapshot 1`] = `
+.c0 {
+  background-color: #F1F4FA;
+  height: 50px;
+  width: 100%;
+  border-radius: 10px;
+  font-size: 14.22px;
+  color: #06152B;
+}
+
+.c0:not(.ant-input-status-error) {
+  border: none;
+}
+
+<input
+  className="ant-input c0"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  type="text"
+  value=""
+/>
+`;

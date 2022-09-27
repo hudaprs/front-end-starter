@@ -1,0 +1,16 @@
+{
+  "auth": {
+    "login": "Log in",
+    "register": "Sign Up",
+    "rememberMe": "Remember Me",
+    "resetPassword": "Reset Password",
+    "notHaveAccount": "Don't have account yet",
+    "newAccount": "New Account",
+    "alreadyHaveAccount": "Already have an account",
+    "privacy": "By creating an account you agree to the",
+    "termsOfUse": "Terms of use",
+    "policy": "Privacy policy",
+    "createAccount": "Create Account",
+    "rememberAccount": "Are you remember your account"
+  }
+}

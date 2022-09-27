@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppBaseFormItem should have snapshot 1`] = `
+.c0 .ant-form-item-label label {
+  color: #06152B;
+  font-size: 16px;
+  line-height: 20.83px;
+  font-weight: 500px;
+  padding: 0px;
+}
+
+<div
+  className="ant-form-item c0"
+>
+  <div
+    className="ant-row ant-form-item-row"
+    style={Object {}}
+    theme={Object {}}
+  >
+    <div
+      className="ant-col ant-form-item-control"
+      style={Object {}}
+    >
+      <div
+        className="ant-form-item-control-input"
+      >
+        <div
+          className="ant-form-item-control-input-content"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

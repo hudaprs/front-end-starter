@@ -1,0 +1,16 @@
+{
+  "auth": {
+    "login": "Masuk",
+    "register": "Daftar",
+    "rememberMe": "Ingat saya",
+    "resetPassword": "Atur ulang password",
+    "notHaveAccount": "Tidak punya akun",
+    "newAccount": "Buat akun baru",
+    "alreadyHaveAccount": "Sudah mempunyai akun",
+    "privacy": "Dengan membuat akun Anda setuju dengan",
+    "termsOfUse": "Kebijakan",
+    "policy": "Privasi",
+    "createAccount": "Buat Akun",
+    "rememberAccount": "Apakah Anda ingat akun"
+  }
+}

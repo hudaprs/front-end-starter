@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppBaseSocialMediaButton should have snapshot 1`] = `
+<div
+  className="sc-kDDrLX hWkIGw"
+  data-testid="wrapper"
+>
+  <button
+    className="ant-btn ant-btn-default sc-gsnTZi iOAFUR"
+    color="#06152B"
+    data-testid="google"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    <img
+      height="24px"
+      src="google.png"
+      width="24px"
+    />
+    <span>
+      app.social.google
+    </span>
+  </button>
+  <button
+    className="ant-btn ant-btn-default sc-gsnTZi iOAFUR"
+    color="#06152B"
+    data-testid="facebook"
+    disabled={false}
+    onClick={[Function]}
+    type="button"
+  >
+    <img
+      height="18px"
+      src="facebook.png"
+      width="9px"
+    />
+    <span>
+      app.social.facebook
+    </span>
+  </button>
+</div>
+`;

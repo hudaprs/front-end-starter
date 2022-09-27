@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LayoutEmpty should be rendered 1`] = `"<div class=\\"sc-bczRLJ hUFkAN\\"><h1 data-testid=\\"content\\">Content</h1></div>"`;

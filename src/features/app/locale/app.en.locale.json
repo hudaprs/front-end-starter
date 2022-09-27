@@ -1,0 +1,37 @@
+{
+  "app": {
+    "welcome": "Welcome To React Starter",
+    "recover": "Recover",
+    "your": "Your",
+    "or": "Or",
+    "and": "And",
+    "our": "Our",
+    "limit": "Limit",
+    "user": {
+      "fullName": "Full Name",
+      "email": "Email",
+      "password": "Password"
+    },
+    "social": {
+      "google": "Google",
+      "facebook": "Facebook"
+    },
+    "status": {
+      "complete": "Complete",
+      "notComplete": "Not Complete"
+    },
+    "table": {
+      "action": "Action"
+    },
+    "action": {
+      "edit": "Edit",
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "update": "Update",
+      "delete": "Delete"
+    },
+    "confirmation": {
+      "areYouSure": "Are You sure?"
+    }
+  }
+}

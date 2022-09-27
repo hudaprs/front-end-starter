@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppBaseLabel should have snapshot 1`] = `
+.c0 {
+  font-size: 11px !important;
+  font-weight: 400;
+  color: #06152B;
+}
+
+<label
+  className="c0"
+/>
+`;

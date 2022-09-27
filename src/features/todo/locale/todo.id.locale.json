@@ -1,0 +1,19 @@
+{
+  "todo": {
+    "title": {
+      "create": "Tambah Todo",
+      "edit": "Ubah Todo"
+    },
+    "table": {
+      "id": "ID",
+      "title": "Judul",
+      "completed": "Terselesaikan"
+    },
+    "form": {
+      "title": "Judul"
+    },
+    "formPlaceholder": {
+      "title": "Masukkan judul"
+    }
+  }
+}
