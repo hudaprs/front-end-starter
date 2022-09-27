@@ -14,6 +14,11 @@
     },
     "formPlaceholder": {
       "title": "Enter title"
+    },
+    "alert": {
+      "successCreated": "Todo has been created",
+      "successUpdated": "Todo has been updated",
+      "successDeleted": "Todo has been deleted"
     }
   }
 }

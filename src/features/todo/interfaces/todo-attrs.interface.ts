@@ -1,5 +1,5 @@
 export interface ITodoAttrsList {
-  query: {
+  query?: {
     _limit?: number
   }
 }
@@ -22,7 +22,6 @@ export interface ITodoAttrsUpdate {
   }
   body: {
     title: string
-    completed: boolean
   }
 }
 

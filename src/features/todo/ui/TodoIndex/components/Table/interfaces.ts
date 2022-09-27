@@ -5,7 +5,7 @@ import { ITodo } from '@/features/todo/interfaces/todo.interface'
 export interface ITableProps {
   data?: ITodo[]
   loading?: boolean
-  isFetching?: boolean
+  fetching?: boolean
   onChange: (inputType: TInputTypeTable, value: string | number) => void
   onCreate: () => void
   onEdit: (id: number) => void

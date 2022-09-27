@@ -25,7 +25,7 @@ import { ColumnsType } from 'antd/lib/table'
 const Table = memo(
   ({
     loading,
-    isFetching,
+    fetching,
     data,
     onChange,
     onCreate,
@@ -101,10 +101,10 @@ const Table = memo(
               {t('todo.title.create')}
             </AppBaseButton>
           }
-          loading={isFetching}
+          loading={fetching}
         />
         <AppBaseTableBody
-          loading={loading || isFetching}
+          loading={loading || fetching}
           columns={columns}
           dataSource={data}
         />

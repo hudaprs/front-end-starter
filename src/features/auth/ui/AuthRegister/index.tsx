@@ -25,9 +25,7 @@ import { Form } from 'antd'
 // React Router DOM
 import { useNavigate } from 'react-router-dom'
 
-// Custom Hooks
-import { useAuth } from '@/features/auth/hooks/auth.hook'
-import { useAppDispatch } from '@/features/app/hooks/app.hook'
+// Interfaces
 import { IAuthAttrsRegister } from '@/features/auth/interfaces/auth-attrs.interface'
 
 const AuthRegister = () => {
@@ -35,8 +33,6 @@ const AuthRegister = () => {
   const { t } = useTranslation()
   const [form] = Form.useForm()
   const navigate = useNavigate()
-  const { auth_isActionLoading, auth_register } = useAuth()
-  const dispatch = useAppDispatch()
 
   /**
    * @description Redirect to login
@@ -57,14 +53,12 @@ const AuthRegister = () => {
   const onSubmit = useCallback(
     async (form: IAuthAttrsRegister): Promise<void> => {
       try {
-        await dispatch(auth_register(form)).unwrap()
-
         navigate('/auth/login')
       } catch (_) {
         //
       }
     },
-    [dispatch, auth_register, navigate]
+    [navigate]
   )
 
   return (
@@ -146,7 +140,6 @@ const AuthRegister = () => {
           type='primary'
           htmlType='submit'
           height={50}
-          loading={auth_isActionLoading}
           className='mt-6'
           block
         >

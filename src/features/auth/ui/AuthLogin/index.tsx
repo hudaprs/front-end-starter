@@ -25,9 +25,6 @@ import { Form } from 'antd'
 // React Router DOM
 import { useNavigate } from 'react-router-dom'
 
-// Custom Hooks
-import { useAuth } from '@/features/auth/hooks/auth.hook'
-
 // Dispatcher
 import { useAppDispatch } from '@/features/app/hooks/app.hook'
 
@@ -39,7 +36,6 @@ const AuthLogin = () => {
   const { t } = useTranslation()
   const [form] = Form.useForm()
   const navigate = useNavigate()
-  const { auth_isActionLoading, auth_login } = useAuth()
   const dispatch = useAppDispatch()
 
   /**
@@ -70,7 +66,7 @@ const AuthLogin = () => {
   const onSubmit = useCallback(
     async (form: IAuthAttrsLogin): Promise<void> => {
       try {
-        await dispatch(auth_login(form)).unwrap()
+        //
       } catch (_) {
         //
       }

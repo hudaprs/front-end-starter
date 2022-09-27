@@ -18,10 +18,9 @@ import { useTranslation } from 'react-i18next'
 // Antd
 import { Form } from 'antd'
 
-const Modal = memo((props: IModalProps) => {
+const Modal = memo(({ onSubmit, form, ...rest }: IModalProps) => {
   // Hook
   const { t } = useTranslation()
-  const [form] = Form.useForm()
 
   /**
    * @description Submit the form
@@ -32,14 +31,14 @@ const Modal = memo((props: IModalProps) => {
     try {
       const response = (await form.validateFields()) as ITodoForm
 
-      props.onSubmit(response)
+      onSubmit(response)
     } catch (_) {
       //
     }
-  }, [])
+  }, [form, onSubmit])
 
   return (
-    <AppBaseModal {...(props as Omit<IModalProps, 'onSubmit'>)} onOk={onOk}>
+    <AppBaseModal {...rest} onOk={onOk} forceRender>
       <Form form={form} layout='vertical' requiredMark={false}>
         {/* Title */}
         <AppBaseFormItem
@@ -53,5 +52,7 @@ const Modal = memo((props: IModalProps) => {
     </AppBaseModal>
   )
 })
+
+Modal.displayName = 'Modal'
 
 export { Modal }

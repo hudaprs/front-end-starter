@@ -25,9 +25,7 @@ import { APP_COLOR_LIGHT } from '@/features/app/constant/app-style.constant'
 // React Router DOM
 import { useNavigate } from 'react-router-dom'
 
-// Custom Hooks
-import { useAuth } from '@/features/auth/hooks/auth.hook'
-import { useAppDispatch } from '@/features/app/hooks/app.hook'
+// Interfaces
 import { IAuthAttrsResetPassword } from '@/features/auth/interfaces/auth-attrs.interface'
 
 const AuthResetPassword = () => {
@@ -35,8 +33,6 @@ const AuthResetPassword = () => {
   const { t } = useTranslation()
   const [form] = Form.useForm()
   const navigate = useNavigate()
-  const { auth_isActionLoading, auth_resetPassword } = useAuth()
-  const dispatch = useAppDispatch()
 
   /**
    * @description Redirect to login
@@ -57,12 +53,12 @@ const AuthResetPassword = () => {
   const onSubmit = useCallback(
     async (form: IAuthAttrsResetPassword): Promise<void> => {
       try {
-        await dispatch(auth_resetPassword(form)).unwrap()
+        //
       } catch (_) {
         //
       }
     },
-    [dispatch, auth_resetPassword]
+    []
   )
 
   return (

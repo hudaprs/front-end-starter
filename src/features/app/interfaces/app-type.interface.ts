@@ -1,1 +1,1 @@
-export type TInputTypeTable = 'limit' | 'search' | 'page' | 'reset'
+export type TInputTypeTable = '_limit' | 'search' | 'page' | 'reset'
