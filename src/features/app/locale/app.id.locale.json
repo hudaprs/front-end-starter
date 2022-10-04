@@ -32,6 +32,13 @@
     },
     "confirmation": {
       "areYouSure": "Apakah Anda yakin?"
+    },
+    "error": {
+      "error": "Error",
+      "internalServerError": "Terjadi Kesalahan Di Server",
+      "badRequest": "Terjadi Kesalahan Ketika Melakukan Request",
+      "unprocessableEntity": "Terdapat Kesalahan Dalam Form",
+      "networkDisconnected": "Jaringan Terputus"
     }
   }
 }

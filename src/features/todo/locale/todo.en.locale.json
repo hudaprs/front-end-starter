@@ -10,7 +10,8 @@
       "completed": "Completed"
     },
     "form": {
-      "title": "Title"
+      "title": "Title",
+      "completed": "Completed"
     },
     "formPlaceholder": {
       "title": "Enter title"

@@ -6,4 +6,5 @@ export interface ITodo {
 
 export interface ITodoForm {
   title: string
+  completed?: boolean
 }

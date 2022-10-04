@@ -1,13 +1,17 @@
 // Redux Toolkit
 import { combineReducers } from '@reduxjs/toolkit'
 
+// Api
+import { todoApi } from '@/features/todo/redux/todo.rtk'
+
 // Slices
 import app from '@/features/app/redux/app.slice'
-import auth from '@/features/auth/redux/auth.slice'
+import etcTable from '@/features/etc/redux/table/etc-table.slice'
 
 const plainReducers = {
   app,
-  auth
+  etcTable,
+  [todoApi.reducerPath]: todoApi.reducer
 }
 
 const reducerRedux_reducers = combineReducers(plainReducers)

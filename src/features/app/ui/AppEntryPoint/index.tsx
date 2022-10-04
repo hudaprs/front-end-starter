@@ -6,7 +6,8 @@ import { useRouter } from '@/plugins'
 
 // Redux
 import { Provider } from 'react-redux'
-import { store } from '@/plugins/redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistor, store } from '@/plugins/redux'
 
 // Styled Components (Global Styles)
 import { AppBaseGlobalStyle } from '@/features/app/components'
@@ -31,7 +32,9 @@ const AppEntryPoint = () => {
 
       {/* Redux, Persist, and Router */}
       <Provider store={store}>
-        <Suspense fallback={'Loading...'}>{routes}</Suspense>
+        <PersistGate loading={'Redux Loading...'} persistor={persistor}>
+          <Suspense fallback={'Loading...'}>{routes}</Suspense>
+        </PersistGate>
       </Provider>
     </>
   )

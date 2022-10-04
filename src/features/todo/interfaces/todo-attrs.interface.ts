@@ -1,7 +1,8 @@
+// Interfaces
+import { IEtcTablePagination } from '@/features/etc/interfaces/table/etc-table-type.interface'
+
 export interface ITodoAttrsList {
-  query?: {
-    _limit?: number
-  }
+  query?: IEtcTablePagination
 }
 
 export interface ITodoAttrsDetail {
@@ -22,6 +23,7 @@ export interface ITodoAttrsUpdate {
   }
   body: {
     title: string
+    completed: boolean
   }
 }
 

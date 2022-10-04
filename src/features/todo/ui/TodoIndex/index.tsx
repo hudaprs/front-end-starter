@@ -16,22 +16,24 @@ import {
 // i18n
 import { useTranslation } from 'react-i18next'
 
-// Custom Hooks
-import { useAppNotification } from '@/features/app/hooks/app-notification.hook'
-
 // Interfaces
 import { ITodoForm } from '@/features/todo/interfaces/todo.interface'
-import { TInputTypeTable } from '@/features/app/interfaces/app-type.interface'
+import { ITodoResponseDetail } from '@/features/todo/interfaces/todo-response.interface'
+import { TEtcTablePaginationType } from '@/features/etc/interfaces/table/etc-table-type.interface'
 
 // Utils
 import { commonUtils_delay } from '@/features/app/utils/common.utils'
+import { notificationUtils_open } from '@/features/app/utils/notification.utils'
 
 // Antd
 import { Form } from 'antd'
 
+// Custom Hooks
+import { useEtcTable } from '@/features/etc/hooks/table/etc-table.hook'
+
 const TodoIndex = memo(() => {
   // Hook
-  const { appNotification_open } = useAppNotification()
+  const { etcTable_find, etcTable_onChange } = useEtcTable([{ id: 1 }])
   const [form] = Form.useForm()
   const { t } = useTranslation()
   const [modal, setModal] = useState<{ isCreateEditOpen: boolean }>({
@@ -63,13 +65,18 @@ const TodoIndex = memo(() => {
   // Delete Todo
   const [todo_delete] = useTodo_deleteMutation()
 
+  /**
+   * @description Get todo list
+   *
+   * @return {void} void
+   */
+  const getTodoList = useCallback((): void => {
+    todo_fetchList({ query: etcTable_find(1) })
+  }, [todo_fetchList, etcTable_find])
+
   useEffect(() => {
-    todo_fetchList({
-      query: {
-        _limit: 5
-      }
-    })
-  }, [todo_fetchList])
+    getTodoList()
+  }, [getTodoList])
 
   /**
    * @description Handle modal
@@ -103,27 +110,25 @@ const TodoIndex = memo(() => {
   /**
    * @description Watch any change in table
    *
-   * @param {TInputTypeTable} inputType
+   * @param {TEtcTablePaginationType} type
    * @param {string|number} value
    *
    * @return {Promise<void>} Promise<void>
    */
   const onChangeTable = useCallback(
     async (
-      inputType: TInputTypeTable,
+      type: TEtcTablePaginationType,
       value: string | number
     ): Promise<void> => {
       try {
-        await todo_fetchList({
-          query: {
-            [inputType]: value
-          }
-        }).unwrap()
+        etcTable_onChange({ id: 1, type, value })
+
+        getTodoList()
       } catch (_) {
         //
       }
     },
-    [todo_fetchList]
+    [etcTable_onChange, getTodoList]
   )
 
   /**
@@ -181,36 +186,32 @@ const TodoIndex = memo(() => {
   const onSubmit = useCallback(
     async (form: ITodoForm): Promise<void> => {
       try {
+        let response: ITodoResponseDetail
+
         if (todo_detail?.id) {
-          await todo_update({
+          response = await todo_update({
             params: { id: todo_detail.id },
-            body: form
+            body: {
+              ...form,
+              completed: form?.completed || false
+            }
           }).unwrap()
         } else {
-          await todo_create({
+          response = await todo_create({
             body: form
           }).unwrap()
         }
 
         handleModal('isCreateEditOpen', false)
 
-        appNotification_open('success', {
-          message: t(
-            `todo.alert.success${todo_detail?.id ? 'Updated' : 'Created'}`
-          )
+        notificationUtils_open('success', {
+          message: response.message
         })
       } catch (_) {
         //
       }
     },
-    [
-      todo_create,
-      todo_update,
-      handleModal,
-      todo_detail?.id,
-      t,
-      appNotification_open
-    ]
+    [todo_create, todo_update, handleModal, todo_detail?.id]
   )
 
   return (

@@ -4,9 +4,19 @@ import { memo } from 'react'
 // Components
 import { AppBasePagination } from '@/features/app/components'
 
-const AppBaseTableFooter = memo(() => {
-  return <AppBasePagination />
-})
+// Interfaces
+import { IAppBaseTableFooterProps } from './interfaces'
+
+const AppBaseTableFooter = memo(
+  ({ paginationAttrs, onChange }: IAppBaseTableFooterProps) => {
+    return (
+      <AppBasePagination
+        {...paginationAttrs}
+        onChange={page => onChange('page', page)}
+      />
+    )
+  }
+)
 
 AppBaseTableFooter.displayName = 'AppBaseTableFooter'
 

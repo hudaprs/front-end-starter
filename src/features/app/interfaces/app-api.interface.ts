@@ -1,20 +1,3 @@
-// Axios
-import { AxiosRequestConfig, AxiosRequestHeaders } from 'axios'
-
-export interface IApiAxiosRequestConfig {
-  requestConfig: AxiosRequestConfig
-}
-
-export interface IApiResponseBase {
-  ok: boolean
-  message: string
-  config: AxiosRequestConfig
-  headers: AxiosRequestHeaders | null
-  status?: number
-  errorStatus?: string
-  result: unknown
-}
-
 export interface IApiPagination<T> {
   currentPage: number
   pageSize: number
@@ -23,20 +6,20 @@ export interface IApiPagination<T> {
   list: T
 }
 
-export interface IApiResponse<T> extends IApiResponseBase {
+export interface IApiResponse<T> {
+  message: string
   result: T
 }
 
-export interface IApiResponseData<T> extends IApiResponseBase {
-  result: {
-    message: string
-    data: T
-  }
+export interface IApiResponsePagination<T> {
+  message: string
+  result: IApiPagination<T>
 }
 
-export interface IApiResponsePagination<T> extends IApiResponseBase {
-  result: {
+export interface IApiResponseError {
+  message: string
+  errors?: {
     message: string
-    data: IApiPagination<T>
-  }
+    field?: string
+  }[]
 }

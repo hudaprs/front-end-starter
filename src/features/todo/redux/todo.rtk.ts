@@ -6,20 +6,31 @@ import {
   ITodoAttrsUpdate,
   ITodoAttrsDelete
 } from '@/features/todo/interfaces/todo-attrs.interface'
+import {
+  ITodoResponseDetail,
+  ITodoResponseList
+} from '@/features/todo/interfaces/todo-response.interface'
 import { ITodo } from '@/features/todo/interfaces/todo.interface'
 
 // Rtk
 import { emptySplitApi } from '@/features/app/redux/app.rtk'
 
+// Plugins
+import { TRootState } from '@/plugins'
+
 export const todoApi = emptySplitApi
   .enhanceEndpoints({ addTagTypes: ['TodoList'] })
   .injectEndpoints({
     endpoints: builder => ({
-      todo_fetchList: builder.query<ITodo[], ITodoAttrsList | null>({
+      todo_fetchList: builder.query<
+        ITodoResponseList['result'],
+        ITodoAttrsList | undefined
+      >({
         query: payload => ({
           url: '/todos',
-          params: payload ? payload?.query : undefined
+          params: payload?.query
         }),
+        transformResponse: (response: ITodoResponseList) => response.result,
         providesTags: result => {
           if (result) {
             return [
@@ -34,70 +45,93 @@ export const todoApi = emptySplitApi
           }
         }
       }),
-      todo_fetchDetail: builder.mutation<ITodo, ITodoAttrsDetail>({
-        query: payload => `/todos/${payload.params.id}`
+      todo_fetchDetail: builder.mutation<
+        ITodoResponseDetail['result'],
+        ITodoAttrsDetail
+      >({
+        query: payload => `/todos/${payload.params.id}`,
+        transformResponse: (response: ITodoResponseDetail) => response.result
       }),
-      todo_create: builder.mutation<ITodo, ITodoAttrsCreate>({
+      todo_create: builder.mutation<ITodoResponseDetail, ITodoAttrsCreate>({
         query: payload => ({
           url: `/todos`,
           method: 'POST',
           body: payload.body
         }),
-        onQueryStarted: async (payload, { dispatch, queryFulfilled }) => {
-          const patch = (newTodo?: Omit<ITodo, 'id'>) =>
-            todoApi.util.updateQueryData(
-              'todo_fetchList',
-              { query: { _limit: 5 } },
-              todoList => {
-                if (newTodo) {
-                  todoList.push({
-                    id: 0, // Just for initial value, must be equal to todo_fetchList return type (ITodo[])
-                    ...newTodo
-                  })
+        onQueryStarted: async (_, { dispatch, queryFulfilled, getState }) => {
+          const rootState = getState() as TRootState
+          const table = rootState.etcTable.etcTable_list.find(
+            table => table.id === 1
+          )
+
+          if (table) {
+            const patch = (newTodo?: Omit<ITodo, 'id'>) =>
+              todoApi.util.updateQueryData(
+                'todo_fetchList',
+                { query: table },
+                todoList => {
+                  if (newTodo) {
+                    todoList.push({
+                      id: 0, // Just for initial value, must be equal to todo_fetchList return type (ITodo[])
+                      ...newTodo
+                    })
+                  }
                 }
-              }
-            )
+              )
 
-          try {
-            const response = await queryFulfilled
+            try {
+              const response = await queryFulfilled
 
-            dispatch(patch(response.data))
-          } catch {
-            dispatch(patch()).undo()
+              dispatch(patch(response.data.result))
+            } catch {
+              dispatch(patch()).undo()
+            }
           }
         }
 
         // Note: if want to re-fetch automatically
         // invalidatesTags: [{ type: 'TodoList' }]
       }),
-      todo_update: builder.mutation<ITodo, ITodoAttrsUpdate>({
+      todo_update: builder.mutation<ITodoResponseDetail, ITodoAttrsUpdate>({
         query: payload => ({
           url: `/todos/${payload.params.id}`,
           method: 'PATCH',
           body: payload.body
-        }),
-        invalidatesTags: (result, err, { params: { id } }) => [
-          { type: 'TodoList', id }
-        ]
+        })
       }),
-      todo_delete: builder.mutation<ITodo, ITodoAttrsDelete>({
+      todo_delete: builder.mutation<ITodoResponseDetail, ITodoAttrsDelete>({
         query: payload => ({
           url: `/todos/${payload.params.id}`,
           method: 'DELETE'
         }),
-        onQueryStarted: async (payload, { dispatch, queryFulfilled }) => {
-          const patch = todoApi.util.updateQueryData(
-            'todo_fetchList',
-            { query: { _limit: 5 } },
-            todoList => todoList.filter(todo => todo.id !== payload.params.id)
+        onQueryStarted: async (
+          payload,
+          { dispatch, queryFulfilled, getState }
+        ) => {
+          const rootState = getState() as TRootState
+          const table = rootState.etcTable.etcTable_list.find(
+            table => table.id === 1
           )
 
-          try {
-            await queryFulfilled
+          if (table) {
+            const patch = todoApi.util.updateQueryData(
+              'todo_fetchList',
+              { query: table },
+              todoList => {
+                const todoIndex = todoList.findIndex(
+                  todo => todo.id === payload.params.id
+                )
+                if (todoIndex !== -1) todoList.splice(todoIndex, 1)
+              }
+            )
 
-            dispatch(patch)
-          } catch {
-            dispatch(patch).undo()
+            try {
+              await queryFulfilled
+
+              dispatch(patch)
+            } catch {
+              dispatch(patch).undo()
+            }
           }
         }
 

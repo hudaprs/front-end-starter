@@ -32,6 +32,13 @@
     },
     "confirmation": {
       "areYouSure": "Are You sure?"
+    },
+    "error": {
+      "error": "Error",
+      "internalServerError": "Internal Server Error",
+      "badRequest": "Bad Request",
+      "unprocessableEntity": "Unprocessable Entity",
+      "networkDisconnected": "Network Disconnected"
     }
   }
 }

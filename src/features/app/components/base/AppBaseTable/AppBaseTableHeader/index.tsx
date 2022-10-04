@@ -13,7 +13,6 @@ import { useTranslation } from 'react-i18next'
 
 // Interfaces
 import { IAppBaseTableHeaderProps } from './interfaces'
-import { TInputTypeTable } from '@/features/app/interfaces/app-type.interface'
 
 const LIMIT: { label: string | number; value: string | number }[] = [
   10, 50, 100
@@ -27,21 +26,6 @@ const AppBaseTableHeader = memo(
     // Hook
     const { t } = useTranslation()
 
-    /**
-     * @description Watch any change in form
-     *
-     * @param {TInputTypeTable} inputType
-     * @param {string | number} value
-     *
-     * @return {void} void
-     */
-    const _onChange = useCallback(
-      (inputType: TInputTypeTable, value: string | number): void => {
-        onChange(inputType, value)
-      },
-      [onChange]
-    )
-
     return (
       <div className='grid grid-cols-1 lg:grid-cols-3 gap-10  items-center justify-center'>
         {/* Left */}
@@ -53,7 +37,7 @@ const AppBaseTableHeader = memo(
             <AppBaseSelectOption
               options={LIMIT}
               placeholder={t('app.limit')}
-              onChange={value => _onChange('_limit', value)}
+              onChange={value => onChange('limit', value)}
               loading={loading}
             />
           </StyledSelectOptionWrapper>
@@ -62,7 +46,7 @@ const AppBaseTableHeader = memo(
         {/* Right */}
         <div>
           <AppBaseInputSearch
-            onSearch={(value: string) => _onChange('search', value)}
+            onSearch={(value: string) => onChange('search', value)}
             loading={loading}
           />
         </div>

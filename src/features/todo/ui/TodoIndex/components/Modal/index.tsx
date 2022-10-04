@@ -3,8 +3,10 @@ import { memo, useCallback } from 'react'
 
 // Components
 import {
+  AppBaseCheckbox,
   AppBaseFormItem,
   AppBaseInput,
+  AppBaseLabel,
   AppBaseModal
 } from '@/features/app/components'
 import { ITodoForm } from '@/features/todo/interfaces/todo.interface'
@@ -47,6 +49,15 @@ const Modal = memo(({ onSubmit, form, ...rest }: IModalProps) => {
           rules={[{ required: true, type: 'string' }]}
         >
           <AppBaseInput placeholder={t('todo.formPlaceholder.title')} />
+        </AppBaseFormItem>
+
+        {/* Status */}
+        <AppBaseFormItem name='completed' valuePropName='checked'>
+          <AppBaseCheckbox>
+            <AppBaseLabel fontSize={14.22} fontWeight={400}>
+              {t('todo.form.completed')}?
+            </AppBaseLabel>
+          </AppBaseCheckbox>
         </AppBaseFormItem>
       </Form>
     </AppBaseModal>

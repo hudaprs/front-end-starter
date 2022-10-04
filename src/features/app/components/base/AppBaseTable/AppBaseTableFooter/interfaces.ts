@@ -1,11 +1,10 @@
 // Interfaces
 import { TEtcTablePaginationType } from '@/features/etc/interfaces/table/etc-table-type.interface'
 
-// React
-import { ReactNode } from 'react'
+// Antd
+import { PaginationProps } from 'antd'
 
-export interface IAppBaseTableHeaderProps {
-  left?: ReactNode
-  loading?: boolean
+export interface IAppBaseTableFooterProps {
+  paginationAttrs?: PaginationProps
   onChange: (type: TEtcTablePaginationType, value: string | number) => void
 }

@@ -10,7 +10,8 @@
       "completed": "Terselesaikan"
     },
     "form": {
-      "title": "Judul"
+      "title": "Judul",
+      "completed": "Selesai"
     },
     "formPlaceholder": {
       "title": "Masukkan judul"
