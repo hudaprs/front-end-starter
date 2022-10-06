@@ -39,6 +39,10 @@
       "badRequest": "Bad Request",
       "unprocessableEntity": "Unprocessable Entity",
       "networkDisconnected": "Network Disconnected"
+    },
+    "menu": {
+      "dashboard": "Dashboard",
+      "todo": "Todo"
     }
   }
 }

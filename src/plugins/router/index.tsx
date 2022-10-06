@@ -1,10 +1,19 @@
 // React Router DOM
 import { useRoutes } from 'react-router-dom'
 
-// Routes
-import { useAppRouter } from '@/features/app/router/app.router'
-import { useAuthRouter } from '@/features/auth/router/auth.router'
+// UI
 import { AppNotFound } from '@/features/app/ui'
+
+// Components
+import { AppLayoutAuth, AppLayoutBackOffice } from '@/features/app/components'
+
+// Routes General
+import { useAppRouter } from '@/features/app/router/app.router'
+
+// Routes Auth
+import { useAuthRouter } from '@/features/auth/router/auth.router'
+
+// Routes Back Office
 import { useTodoRouter } from '@/features/todo/router/todo.router'
 
 const useRouter = () => {
@@ -15,8 +24,16 @@ const useRouter = () => {
 
   const routes = useRoutes([
     ...app,
-    ...auth,
-    ...todo,
+    {
+      path: 'auth',
+      element: <AppLayoutAuth />,
+      children: [...auth]
+    },
+    {
+      path: 'back-office',
+      element: <AppLayoutBackOffice />,
+      children: [...todo]
+    },
     { path: '*', element: <AppNotFound /> }
   ])
 

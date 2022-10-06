@@ -7,6 +7,7 @@ import { middleware_error } from './middleware.redux'
 
 // Api
 import { todoApi } from '@/features/todo/redux/todo.rtk'
+import { authApi } from '@/features/auth/redux/auth.rtk'
 
 // Reducer
 import { reducerRedux_reducers as reducer } from './reducer.redux'
@@ -43,7 +44,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
       }
-    }).concat([middleware_error, todoApi.middleware])
+    }).concat(middleware_error, todoApi.middleware, authApi.middleware)
 })
 
 // Persist Store

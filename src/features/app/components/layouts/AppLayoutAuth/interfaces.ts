@@ -1,7 +1,7 @@
 // React
 import { ReactNode } from 'react'
 
-export interface ILayoutAuthProps {
-  children: ReactNode
+export interface IAppLayoutAuthProps {
+  children?: ReactNode
   isLogin?: boolean
 }

@@ -1,5 +1,5 @@
 // React
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 
 // Components
 import { StyledSelectOptionWrapper } from './components'

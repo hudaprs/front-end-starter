@@ -1,4 +1,5 @@
 // React Lazily
+import { AppRouteGuard } from '@/features/app/components'
 import { lazily } from 'react-lazily'
 
 // React Router DOM
@@ -10,8 +11,17 @@ const { TodoIndex } = lazily(() => import('@/features/todo/ui'))
 const useTodoRouter = (): RouteObject[] => {
   return [
     {
-      path: '/todo',
-      element: <TodoIndex />
+      path: 'todo',
+      children: [
+        {
+          path: '',
+          element: (
+            <AppRouteGuard>
+              <TodoIndex />
+            </AppRouteGuard>
+          )
+        }
+      ]
     }
   ]
 }

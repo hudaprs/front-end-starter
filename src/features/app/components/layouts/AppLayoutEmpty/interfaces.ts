@@ -1,6 +1,6 @@
 // React
 import { ReactNode } from 'react'
 
-export interface ILayoutEmptyProps {
+export interface IAppLayoutEmptyProps {
   children: ReactNode
 }

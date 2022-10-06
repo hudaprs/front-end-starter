@@ -1,10 +1,7 @@
-export interface IAuthResponseLogin {
-  token: string
-  refreshToken: string
-}
+// Interfaces
+import { IApiResponse } from '@/features/app/interfaces/app-api.interface'
+import { IAuthToken, IAuthAuthenticatedUser } from './auth.interface'
 
-export interface IAuthResponseAuthenticatedUser {
-  id: string
-  name: string
-  email: string
-}
+export type IAuthResponseToken = IApiResponse<IAuthToken>
+export type IAuthResponseAuthenticatedUser =
+  IApiResponse<IAuthAuthenticatedUser>

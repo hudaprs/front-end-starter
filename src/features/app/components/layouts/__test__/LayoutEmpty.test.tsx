@@ -2,13 +2,13 @@
 import { render, screen } from '@testing-library/react'
 
 // Components
-import { LayoutEmpty } from '../LayoutEmpty'
+import { AppLayoutEmpty } from '../AppAppLayoutEmpty'
 
-it('LayoutEmpty should be rendered', () => {
+it('AppLayoutEmpty should be rendered', () => {
   const { container } = render(
-    <LayoutEmpty>
+    <AppLayoutEmpty>
       <h1 data-testid='content'>Content</h1>
-    </LayoutEmpty>
+    </AppLayoutEmpty>
   )
   const element = screen.getByTestId('content')
   expect(container.innerHTML).toMatchSnapshot()

@@ -11,6 +11,7 @@ const AppBaseGlobalStyle = styled.createGlobalStyle`
 
   body {
     font-family: 'DmSans-Regular', Arial, Helvetica, sans-serif;
+    background-color: #f4f4f4;
   }
 `
 

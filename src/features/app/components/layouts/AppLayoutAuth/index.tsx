@@ -8,20 +8,20 @@ import {
   StyledFormContainer,
   StyledBanner
 } from './components'
-import { AppBaseLabel } from '@/features/app/components'
+import { AppBaseLabel, AppRouteWrapper } from '@/features/app/components'
 
 // i18n
 import { useTranslation } from 'react-i18next'
 
 // Interfaces
-import { ILayoutAuthProps } from './interfaces'
+import { IAppLayoutAuthProps } from './interfaces'
 
 // Assets
 import AppImage from '@/assets/images/app.png'
 import LoginImage from '@/assets/images/auth/login.png'
 import RegisterImage from '@/assets/images/auth/register.png'
 
-const LayoutAuth = memo(({ children, isLogin }: ILayoutAuthProps) => {
+const AppLayoutAuth = memo(({ isLogin }: IAppLayoutAuthProps) => {
   // Hook
   const { t } = useTranslation()
 
@@ -42,7 +42,7 @@ const LayoutAuth = memo(({ children, isLogin }: ILayoutAuthProps) => {
           </div>
 
           {/* Content Here */}
-          {children}
+          <AppRouteWrapper />
         </StyledFormContainer>
 
         {/* Banner - Right Side */}
@@ -59,6 +59,6 @@ const LayoutAuth = memo(({ children, isLogin }: ILayoutAuthProps) => {
   )
 })
 
-LayoutAuth.displayName = 'LayoutAuth'
+AppLayoutAuth.displayName = 'AppLayoutAuth'
 
-export { LayoutAuth }
+export { AppLayoutAuth }

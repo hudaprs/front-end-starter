@@ -25,18 +25,20 @@ import { Form } from 'antd'
 // React Router DOM
 import { useNavigate } from 'react-router-dom'
 
-// Dispatcher
-import { useAppDispatch } from '@/features/app/hooks/app.hook'
+// Rtk
+import { useAuth_loginMutation } from '@/features/auth/redux/auth.rtk'
 
 // Interfaces
-import { IAuthAttrsLogin } from '@/features/auth/interfaces/auth-attrs.interface'
+import { IAuthLoginForm } from '@/features/auth/interfaces/auth.interface'
 
 const AuthLogin = () => {
   // Hook
   const { t } = useTranslation()
   const [form] = Form.useForm()
   const navigate = useNavigate()
-  const dispatch = useAppDispatch()
+
+  // Login
+  const [auth_login, { isLoading: isLoginLoading }] = useAuth_loginMutation()
 
   /**
    * @description Redirect to register
@@ -59,19 +61,19 @@ const AuthLogin = () => {
   /**
    * @description Login handler
    *
-   * @param {IAuthAttrsLogin} form
+   * @param {IAuthLoginForm} form
    *
    * @return {Promise<void>} Promise<void>
    */
   const onSubmit = useCallback(
-    async (form: IAuthAttrsLogin): Promise<void> => {
+    async (form: IAuthLoginForm): Promise<void> => {
       try {
-        //
+        await auth_login({ body: form }).unwrap()
       } catch (_) {
         //
       }
     },
-    [dispatch, auth_login]
+    [auth_login]
   )
 
   return (
@@ -140,7 +142,7 @@ const AuthLogin = () => {
           type='primary'
           htmlType='submit'
           height={50}
-          loading={auth_isActionLoading}
+          loading={isLoginLoading}
           block
         >
           {t('auth.login')}

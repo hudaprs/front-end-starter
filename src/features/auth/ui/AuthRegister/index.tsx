@@ -26,13 +26,21 @@ import { Form } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
 // Interfaces
-import { IAuthAttrsRegister } from '@/features/auth/interfaces/auth-attrs.interface'
+import { IAuthRegisterForm } from '@/features/auth/interfaces/auth.interface'
+
+// Rtk
+import { useAuth_registerMutation } from '@/features/auth/redux/auth.rtk'
+import { notificationUtils_open } from '@/features/app/utils/notification.utils'
 
 const AuthRegister = () => {
   // Hook
   const { t } = useTranslation()
   const [form] = Form.useForm()
   const navigate = useNavigate()
+
+  // Register
+  const [auth_register, { isLoading: isRegisterLoading }] =
+    useAuth_registerMutation()
 
   /**
    * @description Redirect to login
@@ -46,19 +54,25 @@ const AuthRegister = () => {
   /**
    * @description Register handler
    *
-   * @param {IAuthAttrsRegister} form
+   * @param {IAuthRegisterForm} form
    *
    * @return {Promise<void>} Promise<void>
    */
   const onSubmit = useCallback(
-    async (form: IAuthAttrsRegister): Promise<void> => {
+    async (form: IAuthRegisterForm): Promise<void> => {
       try {
+        const registerResponse = await auth_register({ body: form }).unwrap()
+
+        notificationUtils_open('success', {
+          message: registerResponse.message
+        })
+
         navigate('/auth/login')
       } catch (_) {
         //
       }
     },
-    [navigate]
+    [navigate, auth_register]
   )
 
   return (
@@ -141,6 +155,7 @@ const AuthRegister = () => {
           htmlType='submit'
           height={50}
           className='mt-6'
+          loading={isRegisterLoading}
           block
         >
           {t('auth.createAccount')}

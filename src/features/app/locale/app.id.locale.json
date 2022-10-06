@@ -39,6 +39,10 @@
       "badRequest": "Terjadi Kesalahan Ketika Melakukan Request",
       "unprocessableEntity": "Terdapat Kesalahan Dalam Form",
       "networkDisconnected": "Jaringan Terputus"
+    },
+    "menu": {
+      "dashboard": "Beranda",
+      "todo": "Todo"
     }
   }
 }
