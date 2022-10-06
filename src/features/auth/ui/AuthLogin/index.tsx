@@ -25,20 +25,18 @@ import { Form } from 'antd'
 // React Router DOM
 import { useNavigate } from 'react-router-dom'
 
-// Rtk
-import { useAuth_loginMutation } from '@/features/auth/redux/auth.rtk'
-
 // Interfaces
 import { IAuthLoginForm } from '@/features/auth/interfaces/auth.interface'
+
+// Custom Hooks
+import { useAuth } from '@/features/auth/hooks/auth.hook'
 
 const AuthLogin = () => {
   // Hook
   const { t } = useTranslation()
   const [form] = Form.useForm()
+  const { auth_login, auth_isLoginLoading } = useAuth()
   const navigate = useNavigate()
-
-  // Login
-  const [auth_login, { isLoading: isLoginLoading }] = useAuth_loginMutation()
 
   /**
    * @description Redirect to register
@@ -47,15 +45,6 @@ const AuthLogin = () => {
    */
   const onRedirectToRegister = useCallback((): void => {
     navigate('/auth/register')
-  }, [navigate])
-
-  /**
-   * @description Redirect to reset password
-   *
-   * @return {void} void
-   */
-  const onRedirectToResetPassword = useCallback((): void => {
-    navigate('/auth/reset-password')
   }, [navigate])
 
   /**
@@ -121,20 +110,6 @@ const AuthLogin = () => {
               </AppBaseLabel>
             </AppBaseCheckbox>
           </AppBaseFormItem>
-
-          {/* Reset Password Link */}
-          <AppBaseFormItem>
-            <AppBaseLabel
-              fontSize={14.22}
-              fontWeight={400}
-              fontColor={APP_COLOR_LIGHT.PRIMARY}
-              className='cursor-pointer'
-              onClick={onRedirectToResetPassword}
-              data-testid='reset-password'
-            >
-              {t('auth.resetPassword')}?
-            </AppBaseLabel>
-          </AppBaseFormItem>
         </StyledCredentialsContainer>
 
         {/* Login Button */}
@@ -142,7 +117,7 @@ const AuthLogin = () => {
           type='primary'
           htmlType='submit'
           height={50}
-          loading={isLoginLoading}
+          loading={auth_isLoginLoading}
           block
         >
           {t('auth.login')}

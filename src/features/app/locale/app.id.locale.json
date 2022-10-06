@@ -7,6 +7,10 @@
     "and": "Dan",
     "our": "Kami",
     "limit": "Limit",
+    "locale": {
+      "en": "English",
+      "id": "Indonesia"
+    },
     "user": {
       "fullName": "Nama Lengkap",
       "email": "Email",
@@ -26,12 +30,15 @@
     "action": {
       "edit": "Ubah",
       "submit": "Kirim",
-      "cancel": "Gagal",
+      "cancel": "Batal",
       "update": "Perbaharui",
       "delete": "Hapus"
     },
     "confirmation": {
       "areYouSure": "Apakah Anda yakin?"
+    },
+    "alert": {
+      "logoutSuccess": "Anda Berhasil Logout"
     },
     "error": {
       "error": "Error",

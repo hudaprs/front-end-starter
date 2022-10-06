@@ -9,7 +9,7 @@ import {
 import { emptySplitApi } from '@/features/app/redux/app.rtk'
 
 // Mutations
-import { auth_SET_TOKEN } from './auth.slice'
+import { auth_SET_TOKEN, auth_SET_AUTHENTICATED_USER } from './auth.slice'
 
 export const authApi = emptySplitApi.injectEndpoints({
   endpoints: builder => ({
@@ -31,7 +31,7 @@ export const authApi = emptySplitApi.injectEndpoints({
           body
         }),
         transformResponse: (response: IAuthResponseToken) => response.result,
-        onQueryStarted: async (payload, { dispatch, queryFulfilled }) => {
+        onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
           try {
             const response = await queryFulfilled
 
@@ -45,7 +45,18 @@ export const authApi = emptySplitApi.injectEndpoints({
     auth_me: builder.query<IAuthResponseAuthenticatedUser['result'], void>({
       query: () => ({
         url: `/auth/me`
-      })
+      }),
+      transformResponse: (response: IAuthResponseAuthenticatedUser) =>
+        response.result,
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          const response = await queryFulfilled
+
+          dispatch(auth_SET_AUTHENTICATED_USER(response.data))
+        } catch {
+          //
+        }
+      }
     })
   }),
   overrideExisting: false
@@ -54,5 +65,5 @@ export const authApi = emptySplitApi.injectEndpoints({
 export const {
   useAuth_registerMutation,
   useAuth_loginMutation,
-  useAuth_meQuery
+  useLazyAuth_meQuery
 } = authApi

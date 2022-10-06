@@ -68,10 +68,10 @@ const TodoIndex = memo(() => {
   /**
    * @description Get todo list
    *
-   * @return {void} void
+   * @return {Promise<void>} Promise<void>
    */
-  const getTodoList = useCallback((): void => {
-    todo_fetchList({ query: etcTable_find(1) })
+  const getTodoList = useCallback(async (): Promise<void> => {
+    todo_fetchList({ query: etcTable_find(1) }).unwrap()
   }, [todo_fetchList, etcTable_find])
 
   useEffect(() => {

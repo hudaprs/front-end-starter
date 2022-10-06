@@ -4,15 +4,19 @@ import styled from 'styled-components'
 // Antd
 import { Layout, LayoutProps, SiderProps } from 'antd'
 
+// Lodash
+import omit from 'lodash.omit'
+
 // Layout
 const { Header, Sider, Content } = Layout
 
-const AppBaseLayout = styled(Layout)<{
-  content?: boolean
-  collapsed?: boolean & LayoutProps
-}>`
+const AppBaseLayout = styled(
+  ({ ...rest }: { isContent?: boolean; collapsed?: boolean } & LayoutProps) => (
+    <Layout {...omit(rest, ['isContent', 'collapsed'])} />
+  )
+)`
   margin-left: ${props =>
-    props?.content && !props?.collapsed
+    props?.isContent && !props?.collapsed
       ? '200px'
       : props?.collapsed
       ? '80px'

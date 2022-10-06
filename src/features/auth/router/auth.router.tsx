@@ -8,9 +8,7 @@ import { RouteObject } from 'react-router-dom'
 import { AppRouteGuard } from '@/features/app/components'
 
 // UI
-const { AuthLogin, AuthRegister, AuthResetPassword } = lazily(
-  () => import('@/features/auth/ui')
-)
+const { AuthLogin, AuthRegister } = lazily(() => import('@/features/auth/ui'))
 
 const useAuthRouter = (): RouteObject[] => {
   return [
@@ -27,14 +25,6 @@ const useAuthRouter = (): RouteObject[] => {
       element: (
         <AppRouteGuard>
           <AuthRegister />
-        </AppRouteGuard>
-      )
-    },
-    {
-      path: 'reset-password',
-      element: (
-        <AppRouteGuard>
-          <AuthResetPassword />
         </AppRouteGuard>
       )
     }

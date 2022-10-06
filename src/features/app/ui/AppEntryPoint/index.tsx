@@ -1,42 +1,53 @@
 // React
-import { Suspense } from 'react'
+import { Suspense, useEffect } from 'react'
 
 // Router
 import { useRouter } from '@/plugins'
 
-// Redux
-import { Provider } from 'react-redux'
-import { PersistGate } from 'redux-persist/integration/react'
-import { persistor, store } from '@/plugins/redux'
+// Antd
+import { ConfigProvider as AntdConfigProvider } from 'antd'
 
-// Styled Components (Global Styles)
-import { AppBaseGlobalStyle } from '@/features/app/components'
+// Custom Hooks
+import { useApp } from '@/features/app/hooks/app.hook'
+import { useAuth } from '@/features/auth/hooks/auth.hook'
+
+// Constant
+import { APP_LANGUAGE_LIST } from '@/features/app/constant/app.constant'
+import { validateMessages } from '@/features/app/constant/validation'
 
 // i18n
-import '@/plugins/i18n'
+import i18n from 'i18next'
 
-// Tailwind
-import '@/assets/styles/tailwind.css'
-
-// Antd
-import '@/assets/styles/antd.less'
+// Moment
+import moment from 'moment'
+import 'moment/locale/id'
 
 const AppEntryPoint = () => {
   // Hook
   const routes = useRouter()
+  const { app_locale } = useApp()
+  const { auth_token, auth_getAuthenticatedUser } = useAuth()
+
+  // Trigger any change in locale
+  useEffect(() => {
+    moment.locale(app_locale)
+    i18n.changeLanguage(app_locale)
+  }, [app_locale])
+
+  // Trigger auth when user already logged in
+  useEffect(() => {
+    if (auth_token) {
+      auth_getAuthenticatedUser()
+    }
+  }, [auth_token, auth_getAuthenticatedUser])
 
   return (
-    <>
-      {/* Global Styles */}
-      <AppBaseGlobalStyle />
-
-      {/* Redux, Persist, and Router */}
-      <Provider store={store}>
-        <PersistGate loading={'Redux Loading...'} persistor={persistor}>
-          <Suspense fallback={'Loading...'}>{routes}</Suspense>
-        </PersistGate>
-      </Provider>
-    </>
+    <AntdConfigProvider
+      locale={APP_LANGUAGE_LIST[app_locale]}
+      form={{ validateMessages: validateMessages[app_locale] }}
+    >
+      <Suspense fallback={'Loading...'}>{routes}</Suspense>
+    </AntdConfigProvider>
   )
 }
 

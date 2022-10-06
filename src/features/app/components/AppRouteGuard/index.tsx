@@ -4,9 +4,12 @@ import { memo, useMemo } from 'react'
 // React Router DOM
 import { useLocation, Navigate } from 'react-router-dom'
 
+// Custom Hooks
+import { useAuth } from '@/features/auth/hooks/auth.hook'
+
 const AppRouteGuard = memo(({ children }: { children: JSX.Element }) => {
   // Hook
-  const auth_token = false
+  const { auth_token } = useAuth()
   const location = useLocation()
   const isAuthRoute = useMemo(() => {
     return location.pathname.includes('auth')

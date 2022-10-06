@@ -4,9 +4,9 @@ import { useCallback, useEffect } from 'react'
 // Interfaces
 import {
   TEtcTableChange,
-  TEtcTableInitial,
-  TEtcTablePaginationType
+  TEtcTableInitial
 } from '@/features/etc/interfaces/table/etc-table-type.interface'
+import { IEtcTableSliceTable } from '@/features/etc/interfaces/table/etc-table-slice.interface'
 
 // Custom Hooks
 import { useAppDispatch } from '@/features/app/hooks/app.hook'
@@ -73,11 +73,11 @@ const useEtcTable = (props: TEtcTableInitial[]) => {
    * @return {IEtcTableSliceTable} IEtcTableSliceTable
    */
   const etcTable_find = useCallback(
-    (id: number): TEtcTablePaginationType | undefined => {
+    (id: number): IEtcTableSliceTable | undefined => {
       return store
         .getState()
         .etcTable.etcTable_list.find(table => table.id === id) as
-        | TEtcTablePaginationType
+        | IEtcTableSliceTable
         | undefined
     },
     []

@@ -7,6 +7,10 @@
     "and": "And",
     "our": "Our",
     "limit": "Limit",
+    "locale": {
+      "en": "English",
+      "id": "Indonesia"
+    },
     "user": {
       "fullName": "Full Name",
       "email": "Email",
@@ -32,6 +36,9 @@
     },
     "confirmation": {
       "areYouSure": "Are You sure?"
+    },
+    "alert": {
+      "logoutSuccess": "You Have Been Successfully Logout"
     },
     "error": {
       "error": "Error",
