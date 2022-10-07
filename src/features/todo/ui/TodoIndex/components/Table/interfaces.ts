@@ -9,5 +9,5 @@ export interface ITableProps {
   onChange: (inputType: TEtcTablePaginationType, value: string | number) => void
   onCreate: () => void
   onEdit: (id: number) => void
-  onDelete: (id: number) => void
+  onDelete: (id: number) => Promise<void>
 }

@@ -8,9 +8,6 @@ import {
 // Rtk
 import { emptySplitApi } from '@/features/app/redux/app.rtk'
 
-// Mutations
-import { auth_SET_TOKEN, auth_SET_AUTHENTICATED_USER } from './auth.slice'
-
 export const authApi = emptySplitApi.injectEndpoints({
   endpoints: builder => ({
     auth_register: builder.mutation<
@@ -30,16 +27,7 @@ export const authApi = emptySplitApi.injectEndpoints({
           method: 'POST',
           body
         }),
-        transformResponse: (response: IAuthResponseToken) => response.result,
-        onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
-          try {
-            const response = await queryFulfilled
-
-            dispatch(auth_SET_TOKEN(response.data))
-          } catch {
-            //
-          }
-        }
+        transformResponse: (response: IAuthResponseToken) => response.result
       }
     ),
     auth_me: builder.query<IAuthResponseAuthenticatedUser['result'], void>({
@@ -47,16 +35,7 @@ export const authApi = emptySplitApi.injectEndpoints({
         url: `/auth/me`
       }),
       transformResponse: (response: IAuthResponseAuthenticatedUser) =>
-        response.result,
-      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
-        try {
-          const response = await queryFulfilled
-
-          dispatch(auth_SET_AUTHENTICATED_USER(response.data))
-        } catch {
-          //
-        }
-      }
+        response.result
     })
   }),
   overrideExisting: false

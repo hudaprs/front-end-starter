@@ -107,7 +107,7 @@ const AppLayoutBackOffice = memo(() => {
         collapsed={collapsed || undefined}
       >
         {/* Sidebar - Header */}
-        <div className='flex items-center justify-center mt-4'>
+        <div className='flex items-center justify-center mt-4 mb-4'>
           <h1 className='text-white text-1xl'>
             React {!collapsed && 'Starter'}
           </h1>

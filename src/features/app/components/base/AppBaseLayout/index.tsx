@@ -26,6 +26,7 @@ const AppBaseLayout = styled(
 
 const AppBaseLayoutHeader = styled(Header)`
   background-color: #fff;
+  padding-left: 25px;
 `
 
 const AppBaseLayoutSider = styled(Sider)<SiderProps>`

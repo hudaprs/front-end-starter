@@ -2,7 +2,11 @@
 import { useAppSelector } from '@/features/app/hooks/app.hook'
 
 // Mutations
-import { auth_LOGOUT } from '@/features/auth/redux/auth.slice'
+import {
+  auth_SET_AUTHENTICATED_USER,
+  auth_SET_TOKEN,
+  auth_LOGOUT
+} from '@/features/auth/redux/auth.slice'
 
 // Rtk
 import {
@@ -50,6 +54,8 @@ const useAuth = () => {
     auth_authenticatedUserEmail,
 
     // Mutation
+    auth_SET_AUTHENTICATED_USER,
+    auth_SET_TOKEN,
     auth_LOGOUT,
 
     // Rtk

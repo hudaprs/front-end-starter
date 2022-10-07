@@ -108,7 +108,7 @@ const Table = memo(
           columns={columns}
           dataSource={data}
         />
-        <AppBaseTableFooter />
+        <AppBaseTableFooter onChange={onChange} />
       </>
     )
   }

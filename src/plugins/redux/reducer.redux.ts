@@ -14,8 +14,8 @@ const plainReducers = {
   app,
   auth,
   etcTable,
-  [todoApi.reducerPath]: todoApi.reducer,
-  [authApi.reducerPath]: authApi.reducer
+  [authApi.reducerPath]: authApi.reducer,
+  [todoApi.reducerPath]: todoApi.reducer
 }
 
 const reducerRedux_reducers = combineReducers(plainReducers)

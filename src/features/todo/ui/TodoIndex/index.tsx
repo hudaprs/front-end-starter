@@ -4,15 +4,6 @@ import { memo, useCallback, useState, useEffect } from 'react'
 // Components
 import { StyledWrapper, Table, Modal } from './components'
 
-// Rtk
-import {
-  useLazyTodo_fetchListQuery,
-  useTodo_fetchDetailMutation,
-  useTodo_createMutation,
-  useTodo_updateMutation,
-  useTodo_deleteMutation
-} from '@/features/todo/redux/todo.rtk'
-
 // i18n
 import { useTranslation } from 'react-i18next'
 
@@ -29,41 +20,36 @@ import { notificationUtils_open } from '@/features/app/utils/notification.utils'
 import { Form } from 'antd'
 
 // Custom Hooks
+import { useAppDispatch } from '@/features/app/hooks/app.hook'
 import { useEtcTable } from '@/features/etc/hooks/table/etc-table.hook'
+import { useTodo } from '@/features/todo/hooks/todo.hook'
+
+// Rtk
+import { todoApi } from '@/features/todo/redux/todo.rtk'
 
 const TodoIndex = memo(() => {
   // Hook
+  const dispatch = useAppDispatch()
   const { etcTable_find, etcTable_onChange } = useEtcTable([{ id: 1 }])
   const [form] = Form.useForm()
   const { t } = useTranslation()
+  const {
+    todo_fetchList,
+    todo_isListLoading,
+    todo_isListFetching,
+    todo_list,
+    todo_fetchDetail,
+    todo_resetDetail,
+    todo_create,
+    todo_isCreateLoading,
+    todo_update,
+    todo_isUpdateLoading,
+    todo_delete,
+    todo_detail
+  } = useTodo()
   const [modal, setModal] = useState<{ isCreateEditOpen: boolean }>({
     isCreateEditOpen: false
   })
-
-  // Fetch Todo List
-  const [
-    todo_fetchList,
-    {
-      isLoading: todo_isListLoading,
-      isFetching: todo_isListFetching,
-      data: todo_list
-    }
-  ] = useLazyTodo_fetchListQuery()
-
-  // Fetch Todo Detail
-  const [todo_fetchDetail, { data: todo_detail, reset: todo_resetDetail }] =
-    useTodo_fetchDetailMutation()
-
-  // Create Todo
-  const [todo_create, { isLoading: todo_isCreateLoading }] =
-    useTodo_createMutation()
-
-  // Update Todo
-  const [todo_update, { isLoading: todo_isUpdateLoading }] =
-    useTodo_updateMutation()
-
-  // Delete Todo
-  const [todo_delete] = useTodo_deleteMutation()
 
   /**
    * @description Get todo list
@@ -168,12 +154,34 @@ const TodoIndex = memo(() => {
   const onDelete = useCallback(
     async (id: number): Promise<void> => {
       try {
-        await todo_delete({ params: { id } }).unwrap()
+        const deleteResponse = await todo_delete({ params: { id } }).unwrap()
+
+        // Note: If want to mutate state from cache with pessimist approach
+        // Note: Remove this if you want to refetch data again after delete
+        dispatch(
+          todoApi.util.updateQueryData(
+            'todo_fetchList',
+            {
+              query: etcTable_find(1)
+            },
+            todoList => {
+              const todoIndex = todoList.findIndex(todo => todo.id === id)
+
+              if (todoIndex !== -1) {
+                todoList.splice(todoIndex, 1)
+              }
+            }
+          )
+        )
+
+        notificationUtils_open('success', {
+          message: deleteResponse.message
+        })
       } catch (_) {
         //
       }
     },
-    [todo_delete]
+    [todo_delete, dispatch, etcTable_find]
   )
 
   /**
@@ -200,6 +208,20 @@ const TodoIndex = memo(() => {
           response = await todo_create({
             body: form
           }).unwrap()
+
+          // Note: If want to mutate state from cache with pessimist approach
+          // Note: Remove this if you want to refetch data again after create / update
+          dispatch(
+            todoApi.util.updateQueryData(
+              'todo_fetchList',
+              {
+                query: etcTable_find(1)
+              },
+              todoList => {
+                todoList.push(response.result)
+              }
+            )
+          )
         }
 
         handleModal('isCreateEditOpen', false)
@@ -211,7 +233,14 @@ const TodoIndex = memo(() => {
         //
       }
     },
-    [todo_create, todo_update, handleModal, todo_detail?.id]
+    [
+      todo_create,
+      todo_update,
+      handleModal,
+      todo_detail?.id,
+      dispatch,
+      etcTable_find
+    ]
   )
 
   return (

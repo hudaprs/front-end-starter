@@ -29,13 +29,15 @@ import { useNavigate } from 'react-router-dom'
 import { IAuthLoginForm } from '@/features/auth/interfaces/auth.interface'
 
 // Custom Hooks
+import { useAppDispatch } from '@/features/app/hooks/app.hook'
 import { useAuth } from '@/features/auth/hooks/auth.hook'
 
 const AuthLogin = () => {
   // Hook
   const { t } = useTranslation()
   const [form] = Form.useForm()
-  const { auth_login, auth_isLoginLoading } = useAuth()
+  const { auth_login, auth_isLoginLoading, auth_SET_TOKEN } = useAuth()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   /**
@@ -57,12 +59,14 @@ const AuthLogin = () => {
   const onSubmit = useCallback(
     async (form: IAuthLoginForm): Promise<void> => {
       try {
-        await auth_login({ body: form }).unwrap()
+        const authLoginResponse = await auth_login({ body: form }).unwrap()
+
+        dispatch(auth_SET_TOKEN(authLoginResponse))
       } catch (_) {
         //
       }
     },
-    [auth_login]
+    [dispatch, auth_SET_TOKEN, auth_login]
   )
 
   return (

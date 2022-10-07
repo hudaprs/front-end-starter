@@ -6,6 +6,7 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { middleware_error } from './middleware.redux'
 
 // Api
+import { emptySplitApi } from '@/features/app/redux/app.rtk'
 import { todoApi } from '@/features/todo/redux/todo.rtk'
 import { authApi } from '@/features/auth/redux/auth.rtk'
 
@@ -44,7 +45,12 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
       }
-    }).concat(middleware_error, todoApi.middleware, authApi.middleware)
+    }).concat(
+      middleware_error,
+      emptySplitApi.middleware,
+      todoApi.middleware,
+      authApi.middleware
+    )
 })
 
 // Persist Store

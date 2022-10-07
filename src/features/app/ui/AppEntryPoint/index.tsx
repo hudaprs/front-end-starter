@@ -1,5 +1,5 @@
 // React
-import { Suspense, useEffect } from 'react'
+import { Suspense, useCallback, useEffect } from 'react'
 
 // Router
 import { useRouter } from '@/plugins'
@@ -8,6 +8,7 @@ import { useRouter } from '@/plugins'
 import { ConfigProvider as AntdConfigProvider } from 'antd'
 
 // Custom Hooks
+import { useAppDispatch } from '@/features/app/hooks/app.hook'
 import { useApp } from '@/features/app/hooks/app.hook'
 import { useAuth } from '@/features/auth/hooks/auth.hook'
 
@@ -25,8 +26,10 @@ import 'moment/locale/id'
 const AppEntryPoint = () => {
   // Hook
   const routes = useRouter()
+  const dispatch = useAppDispatch()
   const { app_locale } = useApp()
-  const { auth_token, auth_getAuthenticatedUser } = useAuth()
+  const { auth_token, auth_getAuthenticatedUser, auth_SET_AUTHENTICATED_USER } =
+    useAuth()
 
   // Trigger any change in locale
   useEffect(() => {
@@ -34,12 +37,28 @@ const AppEntryPoint = () => {
     i18n.changeLanguage(app_locale)
   }, [app_locale])
 
+  /**
+   * @description Get authenticated user
+   *
+   * @return {Promise<void>} Promise<void>
+   */
+  const getAuthenticatedUser = useCallback(async (): Promise<void> => {
+    try {
+      const authenticatedUserResponse =
+        await auth_getAuthenticatedUser().unwrap()
+
+      dispatch(auth_SET_AUTHENTICATED_USER(authenticatedUserResponse))
+    } catch (_) {
+      //
+    }
+  }, [auth_getAuthenticatedUser, auth_SET_AUTHENTICATED_USER, dispatch])
+
   // Trigger auth when user already logged in
   useEffect(() => {
     if (auth_token) {
-      auth_getAuthenticatedUser()
+      getAuthenticatedUser()
     }
-  }, [auth_token, auth_getAuthenticatedUser])
+  }, [auth_token, getAuthenticatedUser])
 
   return (
     <AntdConfigProvider
