@@ -7,6 +7,7 @@ This project built with React, TypeScript.
 - Ant design
 - Tailwind
 - Redux toolkit with persist
+- RTK Query
 - i18n
 - jest for testing
 - axios
@@ -242,12 +243,6 @@ const app = createSlice({
     ): void => {
       state.app_loading = appUtils_mapLoading(state.app_loading, payload)
     }
-  },
-  extraReducers: builder => {
-    builder
-      .addCase(app_initialized.fulfilled, (state, { payload }) => {
-        state.app_state = payload
-      })
   }
 })
 
@@ -257,28 +252,6 @@ export const { app_SET_LOADING } = app.actions
 
 // Export reducer
 export default app.reducer
-
-
-// And the api it-self (different file, this should be in app.api.ts, but in the same dir).
-// Should be like this for the simplified
-
-/**
- * @description Initialize the app
- *
- * @param {IAttrs} payload
- */
-export const app_initialized = createAsyncThunk<IResponse, IAttrs>(
-  'app/initialize',
-  async (payload, thunkApi) => {
-    thunkApi.dispatch(app_SET_LOADING({ type: ACTION, value: true }))
-
-    await commonUtils_delay(3000)
-
-    thunkApi.dispatch(app_SET_LOADING({ type: ACTION, value: false }))
-
-    return // Return something useful
-  }
-)
 ```
 
 ---
@@ -384,12 +357,17 @@ Another documentation will be updated soon.
 
 ## Update History
 
-Last updated: 7 September 2021
+**7 September 2021**
 
 - First initial documentation
+
+**7 October 2022**
+
+- Change to RTK query
+- Remove createAsyncThunk
 
 ---
 
 ## Credits
 
-Thanks for reading this documentation, made with ❤️. MIT License😁
+Thanks for reading this documentation, MIT License.

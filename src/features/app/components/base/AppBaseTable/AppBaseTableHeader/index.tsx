@@ -38,6 +38,7 @@ const AppBaseTableHeader = memo(
               options={LIMIT}
               placeholder={t('app.limit')}
               onChange={value => onChange('limit', value)}
+              value={LIMIT[0]['value']}
               loading={loading}
             />
           </StyledSelectOptionWrapper>

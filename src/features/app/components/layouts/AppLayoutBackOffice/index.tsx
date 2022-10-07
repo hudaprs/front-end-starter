@@ -149,7 +149,7 @@ const AppLayoutBackOffice = memo(() => {
               {/* Etc */}
               <div>
                 <p className='cursor-pointer m-0' onClick={onLogout}>
-                  Logout
+                  {t('app.logout')}
                 </p>
               </div>
             </div>
