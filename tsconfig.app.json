@@ -8,6 +8,6 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["pinia-plugin-persist"]
+    "types": ["pinia-plugin-persist", "node"]
   }
 }

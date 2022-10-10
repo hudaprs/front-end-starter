@@ -1,5 +1,7 @@
 <template>
   <div>
+    <h1 className="text-3xl font-bold">Hello world!</h1>
+
     <div v-if="dashboard_loading">Loading...</div>
     <div v-else class="dashboard-list-container p-4">
       <DashboardListItem
