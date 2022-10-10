@@ -1,3 +1,6 @@
+// React
+import { useMemo } from 'react'
+
 // Custom Hooks
 import { useAppSelector } from '@/features/app/hooks/app.hook'
 
@@ -30,6 +33,9 @@ const useAuth = () => {
   const auth_authenticatedUserEmail = useAppSelector(
     state => state.auth.auth_authenticatedUser.email
   )
+  const auth_isAuthenticated = useMemo((): boolean => {
+    return Boolean(auth_token && auth_refreshToken) || false
+  }, [auth_token, auth_refreshToken])
 
   // Login
   const [auth_login, { isLoading: auth_isLoginLoading }] =
@@ -52,6 +58,7 @@ const useAuth = () => {
     auth_authenticatedUserId,
     auth_authenticatedUserName,
     auth_authenticatedUserEmail,
+    auth_isAuthenticated,
 
     // Mutation
     auth_SET_AUTHENTICATED_USER,

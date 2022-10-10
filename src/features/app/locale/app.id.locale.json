@@ -49,7 +49,9 @@
       "networkDisconnected": "Jaringan Terputus"
     },
     "menu": {
+      "menu": "Menu",
       "dashboard": "Beranda",
+      "backOffice": "Back Office",
       "todo": "Todo"
     }
   }

@@ -1,0 +1,541 @@
+{
+  "uuid": "7cd6a26e-28e9-4c6a-bf3c-74a272a79381",
+  "lastMigration": 22,
+  "name": "Front End Starter",
+  "endpointPrefix": "api/v1",
+  "latency": 0,
+  "port": 5000,
+  "hostname": "127.0.0.1",
+  "routes": [
+    {
+      "uuid": "11154e80-e1c6-4bd0-b784-972c7c967bae",
+      "documentation": "Login",
+      "method": "post",
+      "endpoint": "auth/login",
+      "responses": [
+        {
+          "uuid": "6780ac3f-de65-4a63-a991-5e1c0ab877b3",
+          "body": "{\n  \"message\": \"Login Success\",\n  \"result\": {\n    \"token\": \"string\",\n    \"refreshToken\": \"string\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Default Response",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "781ac656-1c74-4395-ae1c-f851b89e32fe",
+          "body": "{\n  \"message\": \"Invalid credentials\"\n}",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Invalid credentials",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": "RANDOM"
+    },
+    {
+      "uuid": "e38973ed-680d-458c-88e6-55b26c163838",
+      "documentation": "Register",
+      "method": "post",
+      "endpoint": "auth/register",
+      "responses": [
+        {
+          "uuid": "32fb7e91-640c-4ad7-a50a-a1df7b71cd72",
+          "body": "{\n  \"message\": \"Register Success\",\n  \"result\": {\n    \"id\": 1,\n    \"name\": \"{{ body 'name' }}\",\n    \"email\": \"{{ body 'email' }}\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Default Response",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "c1112563-3265-4910-9ee9-7cb96f8b71d1",
+          "body": "{\n  \"message\": \"Form Validation\",\n  \"errors\": [\n    {\n      \"message\": \"Name is required\",\n      \"field\": \"name\",\n    },\n    {\n      \"message\": \"Email is required\",\n      \"field\": \"email\",\n    },\n    {\n      \"message\": \"Password is required\",\n      \"field\": \"password\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 422,
+          "label": "Form Validation",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "f5ad3481-b012-4de0-90df-08921960cbe9",
+          "body": "{\n  \"message\": \"Email already registered\"\n}\n",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "Email Registered",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": "RANDOM"
+    },
+    {
+      "uuid": "5550a864-3532-4abc-9d82-536daff7f0e5",
+      "documentation": "Get Authenticated User",
+      "method": "get",
+      "endpoint": "auth/me",
+      "responses": [
+        {
+          "uuid": "a1b9fe3a-9ecf-4776-9d1b-c9ec8c281f8f",
+          "body": "{\n  \"message\": \"Hi\",\n  \"result\": {\n    \"id\": 1,\n    \"name\": \"John Doe\",\n    \"email\": \"john@mail.com\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Default Response",
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}"
+            }
+          ],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "1c15cf32-f0b0-4a0c-8f3b-73eefb01f032",
+          "body": "{\n  \"message\": \"Unauthorized\"\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Unauthorized",
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "8b273c37-a2f6-459f-8e65-2c34ead9dd4a",
+      "documentation": "Refresh User Token",
+      "method": "get",
+      "endpoint": "auth/refresh-token",
+      "responses": [
+        {
+          "uuid": "ab8dcde2-4758-42ad-b4e7-d30cc84917ad",
+          "body": "{\n  \"message\": \"Token Refreshed\",\n  \"result\": {\n    \"token\": \"stringRefreshed\",\n    \"refreshToken\": \"stringRefreshed\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Default Response",
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}"
+            }
+          ],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "903b29a4-cb1b-4d86-b42a-4cb574ed91d0",
+          "body": "{\n  \"message\": \"Unauthorized\"\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Unauthorized",
+          "headers": [
+            {
+              "key": "",
+              "value": ""
+            }
+          ],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "fd2fa4a2-d299-44d4-b76b-41ce97e423c1",
+      "documentation": "Get Todo List",
+      "method": "get",
+      "endpoint": "todos",
+      "responses": [
+        {
+          "uuid": "42dc697b-a1b6-4474-88be-c3d3584f2e18",
+          "body": "{\n  \"message\": \"Get Todo List Success\",\n  \"result\": [\n    {{# repeat (queryParam 'total' '10') }}\n      {\n        \"id\": \"{{ faker 'datatype.number' min=10000 max=100000 }}\",\n        \"title\": \"{{ faker 'name.firstName' }}\",\n        \"completed\": false\n      },\n    {{/repeat }}\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Default Response",
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}"
+            }
+          ],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "655deb74-24a0-44ab-ae42-eac7e4c488a7",
+          "body": "{\n  \"message\": \"Unauthorized\"\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Unauthorized",
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}"
+            }
+          ],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "6d0a3b84-ff2e-4aba-b093-dbb538a818d5",
+      "documentation": "Create Todo ",
+      "method": "post",
+      "endpoint": "todos",
+      "responses": [
+        {
+          "uuid": "855ffbde-657b-4048-8d00-0d91759e5a21",
+          "body": "{\n  \"message\": \"Todo Created\",\n  \"result\": {\n    \"id\": 1,\n    \"title\": \"{{ body 'title' }}\",\n    \"completed\": false \n  }\n}",
+          "latency": 0,
+          "statusCode": 201,
+          "label": "Default Response",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}"
+            }
+          ],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": true,
+          "default": true
+        },
+        {
+          "uuid": "396f6ca2-2e9a-4559-9fdc-d7b1af1f2c53",
+          "body": "{\n  \"message\": \"Form Validation\",\n  \"errors\": [\n    {\n      \"message\": \"Title is required\",\n      \"field\": \"title\"\n    }  \n  ]\n}",
+          "latency": 0,
+          "statusCode": 422,
+          "label": "Form Validation",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "df797a87-5bd8-430b-8ef6-4c631cada438",
+          "body": "{\n  \"message\": \"Unauthorized\"\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Unauthorized",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "55da3db3-3064-460b-afad-58e2d65add81",
+      "documentation": "Get Todo Detail",
+      "method": "get",
+      "endpoint": "todos/:id",
+      "responses": [
+        {
+          "uuid": "fb80a8e5-4ff7-4ab3-b31c-7f3cfcd021ef",
+          "body": "{\n  \"message\": \"Get Todo Detail Success\",\n  \"result\": {\n    \"id\": {{ urlParam 'id' }},\n    \"title\": \"Title\",\n    \"completed\": false \n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Default Response",
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}"
+            }
+          ],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "b09c5826-523d-472d-af2d-5d34d9217648",
+          "body": "{\n  \"message\": \"Todo Not Found\",\n  \"errors\": [\n    {\n      \"message\": \"Todo ID not found\"\n    }  \n  ]\n}",
+          "latency": 0,
+          "statusCode": 404,
+          "label": "Not Found",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "6c919f75-b411-4ec3-a4cf-a387e550d688",
+          "body": "{\n  \"message\": \"Unauthorized\"\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Unauthorized",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "24c495f1-7072-4ba4-979f-b083572e9372",
+      "documentation": "Update Todo",
+      "method": "patch",
+      "endpoint": "todos/:id",
+      "responses": [
+        {
+          "uuid": "c7f2f063-8438-4f22-9b77-612a4de57c88",
+          "body": "{\n  \"message\": \"Todo Updated\",\n  \"result\": {\n    \"id\": {{ urlParam 'id' }},\n    \"title\": \"{{ body 'title' }}\",\n    \"completed\": {{ body 'completed' }}  \n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Default Response",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}"
+            }
+          ],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "e5a39674-de8b-4aad-8e59-1931e109f3ee",
+          "body": "{\n  \"message\": \"Validation Error\",\n  \"errors\": [\n    {\n      \"message\": \"Title is required\",\n      \"field\": \"title\"   \n    }  \n  ]\n}",
+          "latency": 0,
+          "statusCode": 422,
+          "label": "Form Validation",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        },
+        {
+          "uuid": "5ac6b002-c5a1-4a89-9f6e-e66301047505",
+          "body": "{\n  \"message\": \"Unauthorized\"\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Unauthorized",
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}"
+            }
+          ],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": "RANDOM"
+    },
+    {
+      "uuid": "fdc39d01-9d24-4a53-aa28-57f1a4c6352e",
+      "documentation": "Delete Todo ",
+      "method": "delete",
+      "endpoint": "todos/:id",
+      "responses": [
+        {
+          "uuid": "78c46a44-fb97-4e78-813a-06536ef7885c",
+          "body": "{\n  \"message\": \"Todo has been removed\",\n  \"result\": {\n    \"id\": {{ urlParam 'id' }},\n    \"title\": \"Title\",\n    \"completed\": false  \n  }\n}",
+          "latency": 3000,
+          "statusCode": 200,
+          "label": "Default Response",
+          "headers": [
+            {
+              "key": "Authorization",
+              "value": "Bearer {{token}}"
+            }
+          ],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "a95593c9-3c77-4797-8a5c-9539cf9406be",
+          "body": "{\n  \"message\": \"Unauthorized\"\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Unauthorized",
+          "headers": [],
+          "filePath": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept,Authorization,Content-Length, X-Requested-With"
+    },
+    {
+      "key": "Accept",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ]
+}

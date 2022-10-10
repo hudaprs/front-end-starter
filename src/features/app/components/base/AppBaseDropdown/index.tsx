@@ -29,7 +29,7 @@ const AppBaseDropdown = memo((props: IDropdownProps) => {
       ) : (
         <a onClick={e => e.preventDefault()}>
           <Space>
-            {t('app.table.action')}
+            {props?.label ? props.label : t('app.table.action')}
             <DownOutlined />
           </Space>
         </a>

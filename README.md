@@ -21,6 +21,12 @@ This application use:
 
 ---
 
+## Starter Introduction
+
+This application use DDD pattern. Here you can learn a little about DDD pattern, [Visit me](https://www.geeksforgeeks.org/domain-driven-design-ddd)
+
+---
+
 ## Installation
 
 1; Install dependencies using yarn
@@ -38,6 +44,39 @@ You must change the .env.local.example to .env.local and match it with you local
 ```shell
 yarn dev
 ```
+
+---
+
+## Run Mock Server
+
+1; Install Mockoon API
+
+```shell
+yarn global add @mockoon/cli
+```
+
+2; Start Mock Server
+
+```shell
+yarn dev:mock
+```
+
+3; Stop Mock Server (Optional)
+
+If you first time using Mockoon Server, you just run this
+
+```shell
+mockoon-cli stop 0
+```
+
+If you already run Mockoon Server, you can see listened port by typing
+
+```shell
+mockoon-cli list
+```
+
+You can download Mockoon App Right here
+https://mockoon.com/
 
 ---
 
@@ -74,12 +113,6 @@ Run test across all files
 ```shell
 yarn test
 ```
-
----
-
-## Starter Introduction
-
-This application use DDD pattern. Here you can learn a little about DDD pattern, [Visit me](https://www.geeksforgeeks.org/domain-driven-design-ddd)
 
 ---
 

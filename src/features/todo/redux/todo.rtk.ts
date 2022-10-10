@@ -18,7 +18,7 @@ export const todoApi = emptySplitApi.injectEndpoints({
   endpoints: builder => ({
     todo_fetchList: builder.query<
       ITodoResponseList['result'],
-      ITodoAttrsList | undefined
+      ITodoAttrsList | void
     >({
       query: payload => ({
         url: '/todos',

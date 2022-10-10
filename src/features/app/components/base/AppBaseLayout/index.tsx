@@ -8,7 +8,7 @@ import { Layout, LayoutProps, SiderProps } from 'antd'
 import omit from 'lodash.omit'
 
 // Layout
-const { Header, Sider, Content } = Layout
+const { Header, Sider, Content, Footer } = Layout
 
 const AppBaseLayout = styled(
   ({ ...rest }: { isContent?: boolean; collapsed?: boolean } & LayoutProps) => (
@@ -42,9 +42,12 @@ const AppBaseLayoutContent = styled(Content)`
   margin: 0px;
 `
 
+const AppBaseLayoutFooter = styled(Footer)``
+
 export {
   AppBaseLayout,
   AppBaseLayoutHeader,
   AppBaseLayoutSider,
-  AppBaseLayoutContent
+  AppBaseLayoutContent,
+  AppBaseLayoutFooter
 }

@@ -6,6 +6,7 @@
   "scripts": {
     "test": "NODE_ENV=test jest --coverage --watchAll --no-cache",
     "dev": "vite",
+    "dev:mock": "mockoon-cli start --data ./mock.json",
     "build": "tsc -p tsconfig.prod.json && yarn build:tailwind && vite build",
     "build:tailwind": "tailwindcss -i src/assets/styles/tailwind.css -o src/assets/styles/tailwind-generated.css --minify",
     "preview": "vite preview --port=8080",

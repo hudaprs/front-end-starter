@@ -51,18 +51,21 @@ const TodoIndex = memo(() => {
     isCreateEditOpen: false
   })
 
-  /**
-   * @description Get todo list
-   *
-   * @return {Promise<void>} Promise<void>
-   */
-  const getTodoList = useCallback(async (): Promise<void> => {
-    todo_fetchList({ query: etcTable_find(1) }).unwrap()
-  }, [todo_fetchList, etcTable_find])
-
   useEffect(() => {
-    getTodoList()
-  }, [getTodoList])
+    const getTodoList = todo_fetchList({ query: etcTable_find(1) })
+    getTodoList.unwrap()
+
+    return () => {
+      /**
+       * @note Abort this only in production
+       * @note In development mode, because of <React.StrictMode /> it will rerender and will request will be aborted
+       * @note Only cancel this if application is in production mode
+       * @note It just only for useEffect
+       * @note Another abort just when creating / update / delete save it in the same function
+       */
+      if (import.meta.env.PROD) getTodoList.abort()
+    }
+  }, [todo_fetchList, etcTable_find])
 
   /**
    * @description Handle modal
@@ -109,12 +112,12 @@ const TodoIndex = memo(() => {
       try {
         etcTable_onChange({ id: 1, type, value })
 
-        getTodoList()
+        todo_fetchList({ query: etcTable_find(1) })
       } catch (_) {
         //
       }
     },
-    [etcTable_onChange, getTodoList]
+    [etcTable_onChange, todo_fetchList, etcTable_find]
   )
 
   /**
@@ -251,7 +254,7 @@ const TodoIndex = memo(() => {
         fetching={todo_isListFetching}
         data={todo_list}
         onChange={onChangeTable}
-        onCreate={() => handleModal('isCreateEditOpen', true)}
+        onCreate={() => onCancel()}
         onEdit={handleEdit}
         onDelete={onDelete}
       />

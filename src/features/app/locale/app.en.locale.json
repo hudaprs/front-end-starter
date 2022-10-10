@@ -49,7 +49,9 @@
       "networkDisconnected": "Network Disconnected"
     },
     "menu": {
+      "menu": "Menu",
       "dashboard": "Dashboard",
+      "backOffice": "Back Office",
       "todo": "Todo"
     }
   }
