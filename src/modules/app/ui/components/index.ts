@@ -1,5 +1,5 @@
 import type { App } from "vue";
-import { AppBaseTitle } from "./base";
+import { AppBaseImage, AppBaseTitle } from "./base";
 import { AppLayoutAuth, AppLayoutEmpty, AppLayoutPublic } from "./layouts";
 
 /**
@@ -8,6 +8,7 @@ import { AppLayoutAuth, AppLayoutEmpty, AppLayoutPublic } from "./layouts";
  */
 const BaseComponentRegister = (app: App) => {
   // Components
+  app.component("AppBaseImage", AppBaseImage);
   app.component("AppBaseTitle", AppBaseTitle);
 
   // Layouts
