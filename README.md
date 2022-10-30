@@ -9,6 +9,7 @@ This project built with Vue, TypeScript.
 - Pinia with persist
 - i18n
 - jest for testing
+- cypress for e2e testing
 - axios
 
 ## Intro
@@ -84,9 +85,9 @@ yarn test:e2e
 Project structure for this react starter
 
 ```javascript
-cypress                                     // All config about e2e test.
-|___jest                                    // All config about jest / testing of this project.
-|
+
+public                    
+|   |_______favicon.ico
 src                                         // Entry point for the app.
 |___modules                                 // Base Modules for the app.
 |   |_______app                             // Core of feature in the project.
@@ -112,6 +113,9 @@ src                                         // Entry point for the app.
 |   |______axios                            // Axios plugin for the app.
 |   |______i18n                             // i18n plugin for the app.
 |   |______{another}                        // Another plugin for the app.
+tests                                       // All test for the app.
+|   |______cypress                          // All cypress test for the app.
+|   |______jest                             // All jest test for the app.
 ```
 
 If you want to create folder outside declared above, you can create, but, don't forget to update this docs.
