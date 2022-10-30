@@ -3,6 +3,7 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     colors: {
+      black: "#000",
       // --> Customize your colors here
     },
     screens: {
@@ -17,7 +18,7 @@ module.exports = {
       },
       borderRadius: {
         // --> Customize the border radius here
-      }
+      },
     },
   },
   plugins: [],
