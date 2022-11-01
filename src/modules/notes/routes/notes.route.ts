@@ -3,13 +3,13 @@ import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/dashboard",
-    name: "dashboard",
+    path: "/notes",
+    name: "notes",
     meta: {
       requiresAuth: true,
       layout: LAYOUT.DEFAULT,
     },
-    component: () => import("../ui/DashboardUI.vue"),
+    component: () => import("../ui/NotesUI.vue"),
   },
 ];
 

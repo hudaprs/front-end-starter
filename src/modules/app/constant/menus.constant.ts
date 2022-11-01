@@ -9,27 +9,27 @@ interface IMenus {
 
 export const FRONT_MENUS: Array<IMenus> = [
   {
-    title: "Dashboard",
+    title: "dashboard.title",
     icon: "ri-home-6-line",
     route: { name: "dashboard" },
     desc: "Dashboard Page",
   },
   {
-    title: "Menu #2",
-    icon: "ri-community-line",
-    route: { name: "dashboard" },
-    desc: "Menu Desc #2",
+    title: "notes.title",
+    icon: "ri-booklet-line",
+    route: { name: "notes" },
+    desc: "Notes Page",
   },
-  {
-    title: "Menu #3",
-    icon: "ri-community-line",
-    route: { name: "dashboard" },
-    desc: "Menu Desc #3",
-  },
-  {
-    title: "Menu #4",
-    icon: "ri-community-line",
-    route: { name: "dashboard" },
-    desc: "Menu Desc #4",
-  },
+  // {
+  //   title: "Menu #3",
+  //   icon: "ri-community-line",
+  //   route: { name: "dashboard" },
+  //   desc: "Menu Desc #3",
+  // },
+  // {
+  //   title: "Menu #4",
+  //   icon: "ri-community-line",
+  //   route: { name: "dashboard" },
+  //   desc: "Menu Desc #4",
+  // },
 ];
