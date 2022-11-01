@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { useDashboardStore } from "@/modules/dashboard/store/dashboard.store";
 import { storeToRefs } from "pinia";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import DashboardListItem from "./components/DashboardListItem.vue";
 
 const dashboardStore = useDashboardStore();
