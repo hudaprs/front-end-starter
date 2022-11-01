@@ -1,6 +1,18 @@
 import type { App } from "vue";
-import { AppBaseImage, AppBaseModal, AppBaseTitle } from "./base";
-import { AppLayoutAuth, AppLayoutEmpty, AppLayoutPublic } from "./layouts";
+import {
+  AppBaseImage,
+  AppBaseLabel,
+  AppBaseModal,
+  AppBaseTitle,
+  AppBaseTableHeader,
+  AppBaseWrapper,
+} from "./base";
+import {
+  AppLayoutAuth,
+  AppLayoutDefault,
+  AppLayoutEmpty,
+  AppLayoutPublic,
+} from "./layouts";
 
 /**
  * Global register components
@@ -8,15 +20,20 @@ import { AppLayoutAuth, AppLayoutEmpty, AppLayoutPublic } from "./layouts";
  */
 const BaseComponentRegister = (app: App) => {
   // Components
-  app.component("AppBaseImage", AppBaseImage);
-  app.component("AppBaseModal", AppBaseModal);
-  app.component("AppBaseTitle", AppBaseTitle);
+  app
+    .component("AppBaseImage", AppBaseImage)
+    .component("AppBaseLabel", AppBaseLabel)
+    .component("AppBaseModal", AppBaseModal)
+    .component("AppBaseTitle", AppBaseTitle)
+    .component("AppBaseTableHeader", AppBaseTableHeader)
+    .component("AppBaseWrapper", AppBaseWrapper);
 
   // Layouts
   app
     .component("AuthLayout", AppLayoutAuth)
     .component("EmptyLayout", AppLayoutEmpty)
-    .component("PublicLayout", AppLayoutPublic);
+    .component("PublicLayout", AppLayoutPublic)
+    .component("DefaultLayout", AppLayoutDefault);
 };
 
 export default BaseComponentRegister;
