@@ -1,10 +1,7 @@
 <template>
   <div class="base-title">
     <h1 :class="{ 'space-to-bottom': !props.subtitle }">{{ props.title }}</h1>
-    <h4
-      class="space-to-bottom"
-      :style="{ 'font-style': props.subtitleItalic ? 'italic' : 'normal' }"
-    >
+    <h4 class="space-to-bottom" :style="{ 'font-style': props.subtitleItalic ? 'italic' : 'normal' }">
       {{ props.subtitle }}
     </h4>
   </div>
@@ -21,8 +18,8 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: "Default Title", // It's not useful ? delete it
-  marginBottom: "16px",
+  title: 'Default Title', // It's not useful ? delete it
+  marginBottom: '16px',
   subtitleItalic: false,
 });
 </script>

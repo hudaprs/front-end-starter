@@ -1,0 +1,12 @@
+{
+  "notes": {
+    "title": "Catatan",
+    "completed": "Selesai",
+    "todo": "To do",
+    "create": "Buat",
+
+    "alert_message": {
+      "success_create": "Catatan berhasil dibuat!"
+    }
+  }
+}

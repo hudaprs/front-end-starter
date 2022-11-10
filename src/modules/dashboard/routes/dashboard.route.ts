@@ -1,4 +1,4 @@
-import { LAYOUT_PUBLIC } from "@/modules/app/constant/layout.constant";
+import { LAYOUT } from "@/modules/app/constant/layout.constant";
 import type { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "dashboard",
     meta: {
       requiresAuth: true,
-      layout: LAYOUT_PUBLIC,
+      layout: LAYOUT.DEFAULT,
     },
     component: () => import("../ui/DashboardUI.vue"),
   },

@@ -1,0 +1,12 @@
+{
+  "notes": {
+    "title": "Notes",
+    "completed": "Completed",
+    "todo": "To do",
+    "create": "Create",
+
+    "alert_message": {
+      "success_create": "Create notes success!"
+    }
+  }
+}

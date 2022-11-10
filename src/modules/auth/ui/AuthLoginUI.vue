@@ -5,6 +5,25 @@
       subtitle="src/modules/auth/ui/AuthLoginUI.vue"
       subtitleItalic
     />
+    <pre lang="json">{{
+      JSON.stringify(
+        {
+          coords: {
+            accuracy: coords.accuracy,
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            altitude: coords.altitude,
+            altitudeAccuracy: coords.altitudeAccuracy,
+            heading: coords.heading,
+            speed: coords.speed,
+          },
+          locatedAt,
+          error: error ? error.message : error,
+        },
+        null,
+        2
+      )
+    }}</pre>
     <a-form
       :model="form"
       name="basic"
@@ -42,11 +61,12 @@
 
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import type { IAuthForm } from "../model/auth.model";
 import { useAuthStore } from "../store/auth.store";
+import { useGeolocation } from "@vueuse/core";
 
 const authStore = useAuthStore();
 const store = storeToRefs(authStore);
@@ -57,9 +77,19 @@ const onRedirectToDashboard = () => {
   router.replace({ name: "dashboard" });
 };
 
+const { coords, locatedAt, error } = useGeolocation();
+if (error.value) {
+  alert(error.value);
+}
+
+console.log(JSON.parse(JSON.stringify(coords.value)));
+
 const form = reactive<IAuthForm>({
   username: null,
   password: null,
+  location: {
+    ...coords,
+  },
 });
 
 const onFinish = async (payload: IAuthForm) => {
@@ -71,8 +101,19 @@ const { t, locale } = useI18n();
 const changeLang = () => {
   locale.value = locale.value == "en" ? "id" : "en";
 };
+watch(
+  coords,
+  (val) => {
+    form.location = {
+      latitude: val.latitude,
+      longitude: val.longitude,
+    };
+  },
+  { deep: true }
+);
 
 onMounted(() => {
+  console.log(form, "form");
   if (auth_isAuthenticated) onRedirectToDashboard();
 });
 </script>

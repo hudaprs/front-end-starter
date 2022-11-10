@@ -22,6 +22,7 @@ export const useAuthStore = defineStore("auth", {
   actions: {
     async auth_doLogin(payload: IAuthForm): Promise<boolean> {
       console.log("Payload", payload);
+
       try {
         this.$patch({
           auth_isAuthenticated: true,
@@ -29,6 +30,9 @@ export const useAuthStore = defineStore("auth", {
           auth_userInfo: {
             fullname: "JohnDoe",
             role: 1,
+            location: {
+              ...payload.location
+            }
           },
           auth_loading: true,
         });

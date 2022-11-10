@@ -1,6 +1,7 @@
 export type IAuthUserInfo = {
   fullname: string | null;
   role: number | null;
+  location: object | null;
 };
 
 export type IAuthStore = {
@@ -13,4 +14,5 @@ export type IAuthStore = {
 export type IAuthForm = {
   username: string | null;
   password: string | null;
+  location: object | null;
 };
