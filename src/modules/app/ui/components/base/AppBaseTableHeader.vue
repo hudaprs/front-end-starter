@@ -34,6 +34,7 @@ import { useI18n } from 'vue-i18n';
 import type { SelectProps } from 'ant-design-vue';
 import useBreakpoint from 'ant-design-vue/lib/_util/hooks/useBreakpoint';
 import type { Key } from 'ant-design-vue/es/_util/type';
+import { useDebounceFn } from '@vueuse/shared';
 
 export interface Props {
   hideLimit?: boolean;
@@ -48,8 +49,12 @@ const emit = defineEmits<{
 const { t } = useI18n();
 const breakpoint = useBreakpoint();
 
+const debounceSeach = useDebounceFn(val => {
+  emit('change', { search: val !== '' ? val : null });
+}, 500);
+
 const search = ref<string>('');
-watch<string>(search, val => emit('change', { search: val !== '' ? val : null }));
+watch<string>(search, debounceSeach);
 
 const option = ref<number>(10);
 watch<number>(option, val => emit('change', { limit: val }));
