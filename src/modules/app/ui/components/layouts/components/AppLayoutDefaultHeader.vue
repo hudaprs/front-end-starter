@@ -2,9 +2,13 @@
   <a-layout-header class="fixed z-10 right-0 bg-white p-0">
     <div class="flex items-center justify-between py-0 px-4">
       <!-- Left Side -->
-      <div>
+      <a-space size="middle" class="flex align-center">
         <menu-outlined @click="emit('click')" class="ml-1" />
-      </div>
+        <div class="flex flex-col gap-1 leading-none">
+          <AppBaseLabel :title="route.meta.title ? t(route.meta.title) : route.path" :size="14" />
+          <AppBaseBreadcrumb class="text-xs" />
+        </div>
+      </a-space>
 
       <!-- Right Side -->
       <div>
@@ -18,15 +22,17 @@
 </template>
 
 <script setup lang="ts">
-import { MenuOutlined } from "@ant-design/icons-vue";
-import { useI18n } from "vue-i18n";
+import { MenuOutlined } from '@ant-design/icons-vue';
+import { useI18n } from 'vue-i18n';
+import { useRoute } from 'vue-router';
 
 const emit = defineEmits<{
-  (e: "click"): void;
+  (e: 'click'): void;
 }>();
 
-const { t, locale } = useI18n()
+const route = useRoute();
+const { t, locale } = useI18n();
 const changeLang = () => {
-  locale.value = locale.value == "en" ? "id" : "en";
+  locale.value = locale.value == 'en' ? 'id' : 'en';
 };
 </script>

@@ -1,15 +1,17 @@
 export {};
 
-import "vue-router";
+import 'vue-router';
 
 // Constant
-import type { LAYOUT } from "../constant/layout.constant";
+import type { LAYOUT } from '../constant/layout.constant';
 
-declare module "vue-router" {
+declare module 'vue-router' {
   interface RouteMeta {
     requiresAuth: boolean;
     layout?: LAYOUT;
     title?: string;
     breadcrumb?: string;
+    breadcrumbDisabled?: boolean;
+    menuGroup?: string;
   }
 }

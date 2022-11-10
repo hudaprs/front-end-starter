@@ -1,14 +1,11 @@
-import { useAuthStore } from "@/modules/auth/store/auth.store";
-import axios, {
-  type AxiosRequestConfig,
-  type AxiosInstance,
-  type AxiosError,
-} from "axios";
+import { useAuthStore } from '@/modules/auth/store/auth.store';
+import { notification } from 'ant-design-vue';
+import axios, { type AxiosRequestConfig, type AxiosInstance, type AxiosError } from 'axios';
 
 const http: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   headers: {
-    "Content-type": "application/json",
+    'Content-type': 'application/json',
   },
 });
 
@@ -27,7 +24,12 @@ http.interceptors.request.use((config: AxiosRequestConfig) => {
   return config;
 });
 
-http.interceptors.response.use(undefined, (error: AxiosError) => {
+http.interceptors.response.use(undefined, (error: AxiosError<{ message?: string }>) => {
+  if (error.response?.data.message) {
+    notification.error({
+      message: error.response.data.message,
+    });
+  }
   return Promise.reject(error);
 });
 

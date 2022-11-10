@@ -1,10 +1,15 @@
 <template>
   <!-- Desktop mode -->
-  <a-layout-sider v-if="breakpoint.lg" class="fixed top-0 bottom-0 left-0 overflow-auto" :collapsed="props.collapsed"
-    @update:collapsed="emit('update:collapsed', !props.collapsed)" theme="light">
+  <a-layout-sider
+    v-if="breakpoint.lg"
+    class="fixed top-0 bottom-0 left-0 overflow-auto"
+    :collapsed="props.collapsed"
+    @update:collapsed="emit('update:collapsed', !props.collapsed)"
+    theme="light"
+  >
     <div class="logo" />
-    <a-menu :selectedKeys="[route.name]" mode="inline">
-      <a-menu-item v-for="(menu) in FRONT_MENUS" :key="(menu.route as RouteLocationNamedRaw).name">
+    <a-menu :selectedKeys="[route.meta.menuGroup || route.name]" mode="inline">
+      <a-menu-item v-for="menu in FRONT_MENUS" :key="menu.menuGroup || menu.route?.name">
         <RouterLink :to="(menu.route as RouteLocationRaw)" :title="t(menu.title)">
           <em :class="menu.icon" class="menu-icon" />
           <span class="nav-text">{{ t(menu.title) }}</span>
@@ -14,12 +19,18 @@
   </a-layout-sider>
 
   <!-- Tablet / Mobile Mode -->
-  <a-drawer title="Menu" theme="dark" placement="left" class="bg-primary" :closable="false"
-    :visible="!breakpoint.lg && !props.collapsed" width="275"
-    @update:visible="emit('update:collapsed', !props.collapsed)">
+  <a-drawer
+    title="Menu"
+    theme="dark"
+    placement="left"
+    class="bg-primary"
+    :closable="false"
+    :visible="!breakpoint.lg && !props.collapsed"
+    width="275"
+    @update:visible="emit('update:collapsed', !props.collapsed)"
+  >
     <a-menu>
-      <a-menu-item v-for="(menu, index) in FRONT_MENUS" :key="index"
-        @click="emit('update:collapsed', !props.collapsed)">
+      <a-menu-item v-for="(menu, index) in FRONT_MENUS" :key="index" @click="emit('update:collapsed', !props.collapsed)">
         <RouterLink :to="(menu.route as RouteLocationRaw)" :title="t(menu.title)">
           <em :class="menu.icon" class="menu-icon" />
           <span class="nav-text">{{ t(menu.title) }}</span>
@@ -30,10 +41,10 @@
 </template>
 
 <script setup lang="ts">
-import { FRONT_MENUS } from "@/modules/app/constant/menus.constant";
-import useBreakpoint from "ant-design-vue/lib/_util/hooks/useBreakpoint";
-import { useI18n } from "vue-i18n";
-import { type RouteLocationRaw, type RouteLocationNamedRaw, useRoute } from "vue-router";
+import { FRONT_MENUS } from '@/modules/app/constant/menus.constant';
+import useBreakpoint from 'ant-design-vue/lib/_util/hooks/useBreakpoint';
+import { useI18n } from 'vue-i18n';
+import { type RouteLocationRaw, type RouteLocationNamedRaw, useRoute } from 'vue-router';
 
 export interface Props {
   collapsed: boolean;
@@ -41,12 +52,12 @@ export interface Props {
 
 const props = defineProps<Props>();
 const emit = defineEmits<{
-  (e: "update:collapsed", value: boolean): void;
+  (e: 'update:collapsed', value: boolean): void;
 }>();
 
 const breakpoint = useBreakpoint();
-const { t } = useI18n()
-const route = useRoute()
+const { t } = useI18n();
+const route = useRoute();
 </script>
 
 <style lang="scss">

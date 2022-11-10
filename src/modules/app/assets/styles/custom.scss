@@ -1,3 +1,7 @@
-@import "variables";
-@import "mixins";
-@import "utils";
+@import 'variables';
+@import 'mixins';
+@import 'utils';
+
+.spacer {
+  flex-grow: 1 !important;
+}

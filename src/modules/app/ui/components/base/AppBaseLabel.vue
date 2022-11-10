@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, type CSSProperties, type StyleValue } from 'vue'
+import { computed, type CSSProperties } from 'vue'
 
 export interface Props {
   title: string;

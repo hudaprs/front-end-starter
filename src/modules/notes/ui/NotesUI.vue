@@ -1,23 +1,21 @@
 <template>
-  <AppBaseTableHeader @change="onChangeSearch">
-    <template #left>
-      <a-button type="danger">Create</a-button>
-    </template>
-  </AppBaseTableHeader>
+  <NotesFilter @change="onChangeFilter" />
+  <NotesTable :filter="filter" />
 </template>
-  
+
 <script setup lang="ts">
-import { MenuOutlined } from "@ant-design/icons-vue";
-import { useI18n } from "vue-i18n";
+import { ref } from 'vue';
 
-const emit = defineEmits<{
-  (e: "click"): void;
-}>();
+// Ant Design
+import type { Key } from 'ant-design-vue/es/_util/type';
 
-const { t, locale } = useI18n()
+// Components
+import NotesFilter from './components/NotesFilter.vue';
+import NotesTable from './components/NotesTable.vue';
 
-const onChangeSearch = (search: string) => {
-  console.log({ search })
-}
+const filter = ref<Record<string, Key | null>>({});
+
+const onChangeFilter = (val: Record<string, Key | null>) => {
+  filter.value = { ...val };
+};
 </script>
-  

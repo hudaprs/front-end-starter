@@ -1,7 +1,12 @@
 {
-    "common": {
-        "show": "Show",
-        "entries": "Entries",
-        "search": "Search..."
-    }
+  "common": {
+    "show": "Show",
+    "entries": "Entries",
+    "search": "Search...",
+    "of": "of",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "edit": "Edit"
+  }
 }
