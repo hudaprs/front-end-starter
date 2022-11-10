@@ -34,7 +34,7 @@ import { useRouter } from 'vue-router';
 import type { ColumnsType } from 'ant-design-vue/lib/table';
 import type { Key } from 'ant-design-vue/es/_util/type';
 
-import { useAppTable, type IAppTableOptions } from '@/modules/app/composable/appTable';
+import { useAppTable, type IAppTableOptions } from '@/modules/app/composable/useAppTable';
 import type { INoteItem } from '@/modules/notes/model/notes.model';
 import { useNotes } from '@/modules/notes/composable/notes';
 

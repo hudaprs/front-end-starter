@@ -9,7 +9,7 @@ import {
   AppBaseTableFooter,
   AppBaseModal,
 } from './base';
-import { AppLayoutAuth, AppLayoutEmpty, AppLayoutPublic } from './layouts';
+import { AppLayoutAuth, AppLayoutEmpty, AppLayoutPublic, AppLayoutDefault } from './layouts';
 
 /**
  * Global register components
