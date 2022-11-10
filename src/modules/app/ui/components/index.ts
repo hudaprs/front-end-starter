@@ -7,8 +7,9 @@ import {
   AppBaseBreadcrumb,
   AppBaseTableHeader,
   AppBaseTableFooter,
+  AppBaseModal,
 } from './base';
-import { AppLayoutAuth, AppLayoutDefault, AppLayoutEmpty, AppLayoutPublic } from './layouts';
+import { AppLayoutAuth, AppLayoutEmpty, AppLayoutPublic } from './layouts';
 
 /**
  * Global register components
@@ -23,7 +24,8 @@ const BaseComponentRegister = (app: App) => {
     .component('AppBaseCardFilter', AppBaseCardFilter)
     .component('AppBaseTableHeader', AppBaseTableHeader)
     .component('AppBaseTableFooter', AppBaseTableFooter)
-    .component('AppBaseBreadcrumb', AppBaseBreadcrumb);
+    .component('AppBaseBreadcrumb', AppBaseBreadcrumb)
+    .component('AppBaseModal', AppBaseModal);
 
   // Layouts
   app

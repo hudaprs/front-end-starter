@@ -6,3 +6,4 @@ export { default as AppBaseCardFilter } from './AppBaseCardFilter.vue';
 export { default as AppBaseBreadcrumb } from './AppBaseBreadcrumb.vue';
 export { default as AppBaseTableHeader } from './AppBaseTableHeader.vue';
 export { default as AppBaseTableFooter } from './AppBaseTableFooter.vue';
+export { default as AppBaseModal } from './AppBaseModal.vue';
