@@ -1,10 +1,6 @@
 <template>
   <div>
-    <AppBaseTitle
-      title="AuthLoginUI.vue"
-      subtitle="src/modules/auth/ui/AuthLoginUI.vue"
-      subtitleItalic
-    />
+    <AppBaseTitle title="AuthLoginUI.vue" subtitle="src/modules/auth/ui/AuthLoginUI.vue" subtitleItalic />
     <pre lang="json">{{
       JSON.stringify(
         {
@@ -21,38 +17,24 @@
           error: error ? error.message : error,
         },
         null,
-        2
+        2,
       )
     }}</pre>
-    <a-form
-      :model="form"
-      name="basic"
-      layout="vertical"
-      autocomplete="off"
-      @finish="onFinish"
-    >
-      <a-form-item
-        :label="t('auth.username')"
-        name="username"
-        :rules="[{ required: true }]"
-      >
+    <a-form :model="form" name="basic" layout="vertical" autocomplete="off" @finish="onFinish">
+      <a-form-item :label="t('auth.username')" name="username" :rules="[{ required: true }]">
         <a-input v-model:value="form.username" />
       </a-form-item>
 
-      <a-form-item
-        :label="t('auth.password')"
-        name="password"
-        :rules="[{ required: true }]"
-      >
+      <a-form-item :label="t('auth.password')" name="password" :rules="[{ required: true }]">
         <a-input-password v-model:value="form.password" />
       </a-form-item>
 
       <a-space>
         <a-button type="primary" html-type="submit" :loading="auth_loading">
-          {{ $t("auth.login") }}
+          {{ $t('auth.login') }}
         </a-button>
         <a-button type="link" @click="changeLang">
-          {{ $t("auth.change_lang") }}
+          {{ $t('auth.change_lang') }}
         </a-button>
       </a-space>
     </a-form>
@@ -60,13 +42,13 @@
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from "pinia";
-import { onMounted, reactive, watch } from "vue";
-import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
-import type { IAuthForm } from "../model/auth.model";
-import { useAuthStore } from "../store/auth.store";
-import { useGeolocation } from "@vueuse/core";
+import { storeToRefs } from 'pinia';
+import { onMounted, reactive, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+import type { IAuthForm } from '@/modules/auth/model/auth.model';
+import { useAuthStore } from '@/modules/auth/store/auth.store';
+import { useGeolocation } from '@vueuse/core';
 
 const authStore = useAuthStore();
 const store = storeToRefs(authStore);
@@ -74,7 +56,7 @@ const { auth_loading, auth_isAuthenticated } = store;
 
 const router = useRouter();
 const onRedirectToDashboard = () => {
-  router.replace({ name: "dashboard" });
+  router.replace({ name: 'dashboard' });
 };
 
 const { coords, locatedAt, error } = useGeolocation();
@@ -99,21 +81,21 @@ const onFinish = async (payload: IAuthForm) => {
 
 const { t, locale } = useI18n();
 const changeLang = () => {
-  locale.value = locale.value == "en" ? "id" : "en";
+  locale.value = locale.value == 'en' ? 'id' : 'en';
 };
 watch(
   coords,
-  (val) => {
+  val => {
     form.location = {
       latitude: val.latitude,
       longitude: val.longitude,
     };
   },
-  { deep: true }
+  { deep: true },
 );
 
 onMounted(() => {
-  console.log(form, "form");
+  console.log(form, 'form');
   if (auth_isAuthenticated) onRedirectToDashboard();
 });
 </script>

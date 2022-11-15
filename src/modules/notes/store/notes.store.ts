@@ -1,6 +1,8 @@
-import http from '@/plugins/axios';
+import type { AxiosRequestConfig } from 'axios';
 import { defineStore } from 'pinia';
-import type { INoteItem, INotesResponse, INotesStore } from '../model/notes.model';
+
+import http from '@/plugins/axios';
+import type { INoteItem, INotesResponse, INotesStore } from '@/modules/notes/model/notes.model';
 
 export const useNotesStore = defineStore('notes', {
   state: (): INotesStore => ({
@@ -9,11 +11,11 @@ export const useNotesStore = defineStore('notes', {
   }),
 
   actions: {
-    async notes_createNotes(payload: Partial<INoteItem>): Promise<INoteItem> {
+    async notes_createNotes(payload: Partial<INoteItem>, requestConfig?: AxiosRequestConfig): Promise<INoteItem> {
       try {
         this.notes_loading = true;
 
-        const { data } = await http.post<INoteItem>('/todos/add', payload);
+        const { data } = await http.post<INoteItem>('/todos/add', payload, { ...requestConfig });
         return Promise.resolve(data);
       } catch (error) {
         return Promise.reject(error);
@@ -21,11 +23,14 @@ export const useNotesStore = defineStore('notes', {
         this.notes_loading = false;
       }
     },
-    async notes_fetchNotes(params?: Record<string, string | number>): Promise<INotesResponse> {
+    async notes_fetchNotes(
+      params?: Record<string, string | number | null>,
+      requestConfig?: AxiosRequestConfig,
+    ): Promise<INotesResponse> {
       try {
         this.notes_loading = true;
-
-        const { data } = await http.get<INotesResponse>('/todos', { params });
+        console.log(this.notes_loading);
+        const { data } = await http.get<INotesResponse>('/todos', { params, ...requestConfig });
         this.notes_list = data;
 
         return Promise.resolve(data);
