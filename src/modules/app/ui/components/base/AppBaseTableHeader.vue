@@ -14,15 +14,18 @@
 
     <!-- Search -->
     <div class="flex flex-col lg:flex-row align-center justify-end">
-      <a-input-search
+      <a-input
         v-if="!props.hideSearch"
         v-model:value="search"
         :placeholder="t('common.search')"
         :loading="props.loading"
         :style="{ width: breakpoint.lg ? '175px' : '100%' }"
         allowClear
-        @search="emit('change', { search })"
-      />
+      >
+        <template #prefix>
+          <search-outlined />
+        </template>
+      </a-input>
       <slot name="right" />
     </div>
   </a-space>
@@ -31,10 +34,13 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useDebounceFn } from '@vueuse/shared';
+
 import type { SelectProps } from 'ant-design-vue';
 import useBreakpoint from 'ant-design-vue/lib/_util/hooks/useBreakpoint';
 import type { Key } from 'ant-design-vue/es/_util/type';
-import { useDebounceFn } from '@vueuse/shared';
+
+import { SearchOutlined } from '@ant-design/icons-vue';
 
 export interface Props {
   hideLimit?: boolean;
@@ -50,7 +56,7 @@ const { t } = useI18n();
 const breakpoint = useBreakpoint();
 
 const debounceSeach = useDebounceFn(val => {
-  emit('change', { search: val !== '' ? val : null });
+  emit('change', { search: val || null });
 }, 500);
 
 const search = ref<string>('');

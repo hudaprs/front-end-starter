@@ -28,15 +28,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeMount, watch } from 'vue';
+import { onMounted, onBeforeMount, watch, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
+
 import type { ColumnsType } from 'ant-design-vue/lib/table';
 import type { Key } from 'ant-design-vue/es/_util/type';
 
 import { useAppTable, type IAppTableOptions } from '@/modules/app/composable/useAppTable';
 import type { INoteItem } from '@/modules/notes/model/notes.model';
-import { useNotes } from '@/modules/notes/composable/notes';
+import { useNotes } from '@/modules/notes/composable/useNotes';
 
 export interface Props {
   filter: Record<string, Key | null>;
@@ -45,7 +46,7 @@ export interface Props {
 const props = defineProps<Props>();
 
 const { t } = useI18n();
-const { notes_store, notes_fetchNotes, notes_list, notes_loading } = useNotes();
+const { notes_store, notes_fetchNotes, notes_list, notes_loading, notes_clearAllRequest } = useNotes();
 const router = useRouter();
 
 const columns: ColumnsType<INoteItem> = [
@@ -70,6 +71,14 @@ watch<Record<string, Key | null>>(
   },
 );
 
+const fetchNotes = async (params?: Record<string, string | number | null>): Promise<void> => {
+  try {
+    await notes_fetchNotes({ limit: 10, ...params });
+  } catch (_) {
+    //
+  }
+};
+
 watch<IAppTableOptions>(
   appTable_options,
   async () => {
@@ -77,17 +86,21 @@ watch<IAppTableOptions>(
       appTable_mappingSort({ todo: 'backlog' }),
       appTable_mappingFilter({ value: 'valueFilter' }),
     );
-    await notes_fetchNotes({ limit: 10, ...params });
+    await fetchNotes(params);
   },
   { deep: true, flush: 'post' },
 );
 
 onMounted(async () => {
-  await notes_fetchNotes({ limit: 10 });
+  await fetchNotes({ limit: 10 });
 });
 
 onBeforeMount(() => {
   notes_store.$reset();
+});
+
+onBeforeUnmount(() => {
+  notes_clearAllRequest();
 });
 
 const redirectToCreateNotes = (): void => {

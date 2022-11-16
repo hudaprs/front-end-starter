@@ -34,8 +34,8 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import { notification } from 'ant-design-vue';
 
-import type { INoteItem } from '../model/notes.model';
-import { useNotes } from '../composable/notes';
+import type { INoteItem } from '@/modules/notes/model/notes.model';
+import { useNotes } from '@/modules/notes/composable/useNotes';
 
 const { t } = useI18n();
 const router = useRouter();

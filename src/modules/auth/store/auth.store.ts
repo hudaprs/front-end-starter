@@ -1,7 +1,7 @@
-import { defineStore } from "pinia";
-import type { IAuthForm, IAuthStore } from "../model/auth.model";
+import { defineStore } from 'pinia';
+import type { IAuthForm, IAuthStore } from '@/modules/auth/model/auth.model';
 
-export const useAuthStore = defineStore("auth", {
+export const useAuthStore = defineStore('auth', {
   state: (): IAuthStore => ({
     auth_isAuthenticated: false,
     auth_token: null,
@@ -21,18 +21,18 @@ export const useAuthStore = defineStore("auth", {
 
   actions: {
     async auth_doLogin(payload: IAuthForm): Promise<boolean> {
-      console.log("Payload", payload);
+      console.log('Payload', payload);
 
       try {
         this.$patch({
           auth_isAuthenticated: true,
-          auth_token: "FAKE-TOKEN",
+          auth_token: 'FAKE-TOKEN',
           auth_userInfo: {
-            fullname: "JohnDoe",
+            fullname: 'JohnDoe',
             role: 1,
             location: {
-              ...payload.location
-            }
+              ...payload.location,
+            },
           },
           auth_loading: true,
         });
@@ -54,8 +54,8 @@ export const useAuthStore = defineStore("auth", {
     strategies: [
       {
         storage: localStorage,
-        key: "auth",
-        paths: ["auth_isAuthenticated", "auth_token", "auth_userInfo"],
+        key: 'auth',
+        paths: ['auth_isAuthenticated', 'auth_token', 'auth_userInfo'],
       },
     ],
   },
