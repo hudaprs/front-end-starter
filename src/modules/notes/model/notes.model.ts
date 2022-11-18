@@ -9,11 +9,24 @@ export type INoteItem = {
   completed: boolean;
 };
 
+export type INoteQuoteItem = {
+  id: number;
+  quote: string;
+  author: boolean;
+};
+
 export type INotesResponse = IPagination & {
   todos: INoteItem[];
+};
+
+export type INotesQuotesResponse = IPagination & {
+  quotes: INoteQuoteItem[];
 };
 
 export type INotesStore = {
   notes_loading: boolean;
   notes_list: INotesResponse;
+
+  notes_quotes_loading: boolean;
+  notes_quotes_list: INotesQuotesResponse;
 };

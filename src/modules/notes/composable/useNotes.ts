@@ -10,7 +10,7 @@ export const useNotes = () => {
   const { httpAbort_registerAbort, httpAbort_clearAllRequest } = useHttpAbort();
   const store = useNotesStore();
   const storeRefs = storeToRefs(store);
-  const { notes_list, notes_loading } = storeRefs;
+  const { notes_list, notes_loading, notes_quotes_list, notes_quotes_loading } = storeRefs;
 
   const notes_fetchNotes = async (params?: Record<string, string | number | null>) => {
     try {
@@ -30,12 +30,24 @@ export const useNotes = () => {
     }
   };
 
+  const notes_fetchQuotes = async (params?: Record<string, string | number | null>) => {
+    try {
+      const data = await store.notes_fetchQuotes(params, { ...httpAbort_registerAbort(NOTES_REQUEST.FETCH_QUOTES) });
+      return data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  };
+
   return {
     notes_store: store,
     notes_list,
     notes_loading,
+    notes_quotes_list,
+    notes_quotes_loading,
     notes_fetchNotes,
     notes_createNotes,
+    notes_fetchQuotes,
     notes_clearAllRequest: httpAbort_clearAllRequest,
   };
 };
