@@ -77,7 +77,6 @@ const baseQueryWithReauth: BaseQueryFn<
 }
 
 export const emptySplitApi = createApi({
-  reducerPath: 'emptyApi',
   baseQuery: baseQueryWithReauth,
   endpoints: () => ({})
 })
