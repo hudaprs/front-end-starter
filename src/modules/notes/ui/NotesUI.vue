@@ -1,6 +1,8 @@
 <template>
   <NotesFilter @change="onChangeFilter" />
   <NotesTable :filter="filter" />
+  <a-divider class="my-5" />
+  <NotesQuotesTable />
 </template>
 
 <script setup lang="ts">
@@ -12,6 +14,7 @@ import type { Key } from 'ant-design-vue/es/_util/type';
 // Components
 import NotesFilter from './components/NotesFilter.vue';
 import NotesTable from './components/NotesTable.vue';
+import NotesQuotesTable from './components/NotesQuotesTable.vue';
 
 const filter = ref<Record<string, Key | null>>({});
 

@@ -8,7 +8,7 @@
     <!-- Select Limit -->
     <a-space v-if="!props.hideLimit" class="flex items-center justify-center">
       <AppBaseLabel :title="t('common.show')" size="12" :isBold="false" />
-      <a-select v-model:value="option" style="width: 70px" :options="optionList" />
+      <a-select v-model:value="option" style="width: 70px" :options="optionList" @change="onChangeLimit" />
       <AppBaseLabel :title="t('common.entries')" size="12" :isBold="false" />
     </a-space>
 
@@ -21,6 +21,7 @@
         :loading="props.loading"
         :style="{ width: breakpoint.lg ? '175px' : '100%' }"
         allowClear
+        @change="onChangeSearch"
       >
         <template #prefix>
           <search-outlined />
@@ -32,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useDebounceFn } from '@vueuse/shared';
 
@@ -42,7 +43,10 @@ import type { Key } from 'ant-design-vue/es/_util/type';
 
 import { SearchOutlined } from '@ant-design/icons-vue';
 
+import type { IAppTableStateOptions } from '@/modules/app/composable/useAppTable';
+
 export interface Props {
+  tableName: string;
   hideLimit?: boolean;
   hideSearch?: boolean;
   loading?: boolean;
@@ -55,15 +59,15 @@ const emit = defineEmits<{
 const { t } = useI18n();
 const breakpoint = useBreakpoint();
 
-const debounceSeach = useDebounceFn(val => {
-  emit('change', { search: val || null });
+const debounceSeach = useDebounceFn((val: Event) => {
+  emit('change', { search: (val.target as HTMLInputElement).value || null });
 }, 500);
 
 const search = ref<string>('');
-watch<string>(search, debounceSeach);
+const onChangeSearch = debounceSeach;
 
 const option = ref<number>(10);
-watch<number>(option, val => emit('change', { limit: val }));
+const onChangeLimit = (val: number) => emit('change', { limit: val });
 
 const optionList = ref<SelectProps['options']>([
   { label: 5, value: 5 },
@@ -71,4 +75,14 @@ const optionList = ref<SelectProps['options']>([
   { label: 50, value: 50 },
   { label: 100, value: 100 },
 ]);
+
+onBeforeMount(() => {
+  const storage = localStorage.getItem(props.tableName);
+  const savedState = storage ? (JSON.parse(storage) as IAppTableStateOptions) : {};
+
+  if (savedState.search) search.value = savedState.search;
+  if (savedState.limit) option.value = savedState.limit;
+
+  emit('change', { ...savedState, changeType: 'saved-state' });
+});
 </script>
