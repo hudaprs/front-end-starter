@@ -399,6 +399,9 @@ Another documentation will be updated soon.
 - Change to RTK query
 - Remove createAsyncThunk
 
+**24 November 2022**
+- Fix RTK query middleware warning message
+
 ---
 
 ## Credits
