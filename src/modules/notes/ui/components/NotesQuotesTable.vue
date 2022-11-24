@@ -44,14 +44,8 @@ const columns: ColumnsType<INoteQuoteItem> = [
   { title: 'Author', dataIndex: 'author', sorter: true },
 ];
 
-const {
-  appTable_mappingSort,
-  appTable_handleParams,
-  appTable_handleTableChange,
-  appTable_onChange,
-  appTable_clearTableState,
-  appTable_options,
-} = useAppTable<INoteQuoteItem>(name);
+const { appTable_mappingSort, appTable_handleParams, appTable_handleTableChange, appTable_onChange, appTable_options } =
+  useAppTable<INoteQuoteItem>(name);
 
 const fetchQuotes = async (): Promise<void> => {
   try {
@@ -67,7 +61,7 @@ watch<IAppTableOptions>(
   async () => {
     await fetchQuotes();
   },
-  { deep: true, flush: 'post' },
+  { flush: 'post' },
 );
 
 onBeforeMount(() => {
@@ -76,9 +70,5 @@ onBeforeMount(() => {
 
 onBeforeUnmount(() => {
   notes_clearAllRequest();
-});
-
-onBeforeRouteLeave(routeLeave => {
-  if (routeLeave.meta.menuGroup !== route.meta.menuGroup) appTable_clearTableState();
 });
 </script>

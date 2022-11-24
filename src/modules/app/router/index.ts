@@ -3,6 +3,7 @@ import { useAuthStore } from '@/modules/auth/store/auth.store';
 import { createRouter, createWebHistory, type RouteLocationNormalized, type RouteRecordRaw } from 'vue-router';
 
 import { AppCommonEntryPoint, AppCommonNotFound } from '@/modules/app/ui/components/common';
+import { useTableStore } from '../store/table.store';
 
 const routes: Array<RouteRecordRaw> = [];
 const modules = import.meta.glob('/**/*.route.ts');
@@ -37,6 +38,11 @@ router.beforeEach((to: RouteLocationNormalized) => {
   // https://pinia.vuejs.org/core-concepts/outside-component-usage.html#single-page-applications
   const authStore = useAuthStore();
   if (to.meta.requiresAuth && !authStore.auth_isAuthenticated) return { name: 'login' };
+});
+
+router.beforeResolve((to, from) => {
+  const tableStore = useTableStore();
+  if (to.meta.menuGroup !== from.meta.menuGroup) tableStore.table_clearAllTableState();
 });
 
 export default router;

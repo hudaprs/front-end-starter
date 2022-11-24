@@ -22,7 +22,7 @@ export type IAppTableOptions = {
 };
 
 export function useAppTable<ItemShape = DefaultRecordType>(tableName: string) {
-  const appTable_options = reactive<IAppTableOptions>({ filter: {}, options: {} });
+  const appTable_options = reactive<IAppTableOptions>({ filter: { limit: 10 }, options: {} });
   const appTable_store = useTableStore();
   const appTable_state = storeToRefs(appTable_store).table_state;
 
@@ -37,8 +37,6 @@ export function useAppTable<ItemShape = DefaultRecordType>(tableName: string) {
   };
 
   const appTable_clearTableState = () => {
-    appTable_options.filter = {};
-    appTable_options.options = {};
     appTable_store.table_clearTableState(tableName);
   };
 

@@ -64,7 +64,6 @@ const {
   appTable_handleParams,
   appTable_handleTableChange,
   appTable_onChange,
-  appTable_clearTableState,
   appTable_options,
 } = useAppTable<INoteItem>(name);
 
@@ -96,7 +95,7 @@ watch<IAppTableOptions>(
   async () => {
     await fetchNotes();
   },
-  { deep: true, flush: 'post' },
+  { flush: 'post' },
 );
 
 onBeforeMount(() => {
@@ -105,9 +104,5 @@ onBeforeMount(() => {
 
 onBeforeUnmount(() => {
   notes_clearAllRequest();
-});
-
-onBeforeRouteLeave(routeLeave => {
-  if (routeLeave.meta.menuGroup !== route.meta.menuGroup) appTable_clearTableState();
 });
 </script>
