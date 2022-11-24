@@ -1,8 +1,13 @@
 import { reactive } from 'vue';
+
 import type { TablePaginationConfig, TableProps } from 'ant-design-vue';
 import type { FilterValue, SorterResult } from 'ant-design-vue/es/table/interface';
 import type { DefaultRecordType } from 'ant-design-vue/es/vc-table/interface';
 import type { Key } from 'ant-design-vue/es/_util/type';
+
+import { storeToRefs } from 'pinia';
+
+import { useTableStore } from '@/modules/app/store/table.store';
 
 export type IAppTableStateOptions = {
   sort?: string | null;
@@ -18,16 +23,23 @@ export type IAppTableOptions = {
 
 export function useAppTable<ItemShape = DefaultRecordType>(tableName: string) {
   const appTable_options = reactive<IAppTableOptions>({ filter: {}, options: {} });
+  const appTable_store = useTableStore();
+  const appTable_state = storeToRefs(appTable_store).table_state;
 
   const appTable_saveTableState = (params: Record<string, Key | null>): void => {
-    const paramsSaved = { sort: params.sort, skip: params.skip, limit: params.limit, search: params.search };
-    localStorage.setItem(tableName, JSON.stringify(paramsSaved));
+    const paramsSaved: IAppTableStateOptions = {
+      sort: params.sort as string,
+      skip: params.skip as number,
+      limit: params.limit as number,
+      search: params.search as string,
+    };
+    appTable_store.table_setTableState(tableName, paramsSaved);
   };
 
   const appTable_clearTableState = () => {
     appTable_options.filter = {};
     appTable_options.options = {};
-    localStorage.removeItem(tableName);
+    appTable_store.table_clearTableState(tableName);
   };
 
   const appTable_onChange = (val: Record<string, Key | null>): void => {
@@ -71,8 +83,7 @@ export function useAppTable<ItemShape = DefaultRecordType>(tableName: string) {
   };
 
   const appTable_handleParams = (mappingSort?: Record<string, string | null>, mappingFilter?: Record<string, Key | null>) => {
-    const storage = localStorage.getItem(tableName);
-    const savedState = storage ? (JSON.parse(storage) as IAppTableStateOptions) : {};
+    const savedState = appTable_state.value[tableName] || {};
 
     const options = appTable_options.options.sort !== undefined ? mappingSort : { sort: savedState.sort || null };
     const filter = mappingFilter ?? appTable_options.filter;
@@ -85,6 +96,7 @@ export function useAppTable<ItemShape = DefaultRecordType>(tableName: string) {
 
   return {
     appTable_options,
+    appTable_state,
     appTable_handleTableChange,
     appTable_onChange,
     appTable_mappingSort,

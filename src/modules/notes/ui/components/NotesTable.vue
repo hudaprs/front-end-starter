@@ -87,6 +87,10 @@ const fetchNotes = async (): Promise<void> => {
   }
 };
 
+const redirectToCreateNotes = (): void => {
+  router.push({ name: 'notes-create' });
+};
+
 watch<IAppTableOptions>(
   appTable_options,
   async () => {
@@ -106,8 +110,4 @@ onBeforeUnmount(() => {
 onBeforeRouteLeave(routeLeave => {
   if (routeLeave.meta.menuGroup !== route.meta.menuGroup) appTable_clearTableState();
 });
-
-const redirectToCreateNotes = (): void => {
-  router.push({ name: 'notes-create' });
-};
 </script>

@@ -43,7 +43,7 @@ import type { Key } from 'ant-design-vue/es/_util/type';
 
 import { SearchOutlined } from '@ant-design/icons-vue';
 
-import type { IAppTableStateOptions } from '@/modules/app/composable/useAppTable';
+import { useAppTable, type IAppTableStateOptions } from '@/modules/app/composable/useAppTable';
 
 export interface Props {
   tableName: string;
@@ -58,6 +58,7 @@ const emit = defineEmits<{
 
 const { t } = useI18n();
 const breakpoint = useBreakpoint();
+const { appTable_state } = useAppTable(props.tableName);
 
 const debounceSeach = useDebounceFn((val: Event) => {
   emit('change', { search: (val.target as HTMLInputElement).value || null });
@@ -77,8 +78,7 @@ const optionList = ref<SelectProps['options']>([
 ]);
 
 onBeforeMount(() => {
-  const storage = localStorage.getItem(props.tableName);
-  const savedState = storage ? (JSON.parse(storage) as IAppTableStateOptions) : {};
+  const savedState = appTable_state.value[props.tableName] || {};
 
   if (savedState.search) search.value = savedState.search;
   if (savedState.limit) option.value = savedState.limit;
