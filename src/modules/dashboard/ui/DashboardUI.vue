@@ -13,6 +13,7 @@
         class="mb-4"
       />
     </div>
+    <input type="file" @change="uploadFile" />
   </div>
 </template>
 
@@ -22,9 +23,18 @@ import { storeToRefs } from "pinia";
 import { onMounted, ref } from "vue";
 import DashboardListItem from "./components/DashboardListItem.vue";
 
+import { readExcelFile } from "@/modules/app/composable/useFile";
+
 const dashboardStore = useDashboardStore();
 const store = storeToRefs(dashboardStore);
 const { dashboard_posts, dashboard_loading } = store;
+
+const uploadFile = async (e: any) => {
+  const file = e.target.files[0];
+  const result = await readExcelFile(file);
+  console.log(file, 'file')
+  console.log(result, 'result')
+};
 
 onMounted(async () => {
   await dashboardStore.fetchPosts();

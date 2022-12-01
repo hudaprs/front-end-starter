@@ -1,5 +1,5 @@
 <template>
-  <AppBaseTableHeader @change="appTable_onChange">
+  <AppBaseTableHeader :tableName="name" @change="appTable_onChange">
     <template #left>
       <a-button type="danger" @click="redirectToCreateNotes">{{ t('notes.create') }}</a-button>
     </template>
@@ -28,9 +28,9 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeMount, watch, onBeforeUnmount } from 'vue';
+import { onBeforeMount, watch, onBeforeUnmount } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
+import { onBeforeRouteLeave, useRoute, useRouter } from 'vue-router';
 
 import type { ColumnsType } from 'ant-design-vue/lib/table';
 import type { Key } from 'ant-design-vue/es/_util/type';
@@ -43,11 +43,14 @@ export interface Props {
   filter: Record<string, Key | null>;
 }
 
+const name = 'NotesTable';
+
 const props = defineProps<Props>();
 
 const { t } = useI18n();
 const { notes_store, notes_fetchNotes, notes_list, notes_loading, notes_clearAllRequest } = useNotes();
 const router = useRouter();
+const route = useRoute();
 
 const columns: ColumnsType<INoteItem> = [
   { title: 'User Id', dataIndex: 'userId', sorter: true },
@@ -62,7 +65,7 @@ const {
   appTable_handleTableChange,
   appTable_onChange,
   appTable_options,
-} = useAppTable<INoteItem>();
+} = useAppTable<INoteItem>(name);
 
 watch<Record<string, Key | null>>(
   () => props.filter,
@@ -71,29 +74,29 @@ watch<Record<string, Key | null>>(
   },
 );
 
-const fetchNotes = async (params?: Record<string, string | number | null>): Promise<void> => {
+const fetchNotes = async (): Promise<void> => {
   try {
+    const params = appTable_handleParams(
+      appTable_mappingSort({ todo: 'backlog' }),
+      appTable_mappingFilter({ value: 'valueFilter' }),
+    );
     await notes_fetchNotes({ limit: 10, ...params });
   } catch (_) {
     //
   }
 };
 
+const redirectToCreateNotes = (): void => {
+  router.push({ name: 'notes-create' });
+};
+
 watch<IAppTableOptions>(
   appTable_options,
   async () => {
-    const params = appTable_handleParams(
-      appTable_mappingSort({ todo: 'backlog' }),
-      appTable_mappingFilter({ value: 'valueFilter' }),
-    );
-    await fetchNotes(params);
+    await fetchNotes();
   },
-  { deep: true, flush: 'post' },
+  { flush: 'post' },
 );
-
-onMounted(async () => {
-  await fetchNotes({ limit: 10 });
-});
 
 onBeforeMount(() => {
   notes_store.$reset();
@@ -102,8 +105,4 @@ onBeforeMount(() => {
 onBeforeUnmount(() => {
   notes_clearAllRequest();
 });
-
-const redirectToCreateNotes = (): void => {
-  router.push({ name: 'notes-create' });
-};
 </script>
