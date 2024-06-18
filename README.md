@@ -1,4 +1,6 @@
-# Welcome To Front-End Starter, base with DDD
+# Welcome To Front-End Starter
+
+This is only a prototype for starting your own project (needs to be updated)
 
 |                             Starter                              | State Management | Typescript |  Updated At   |
 | :--------------------------------------------------------------: | :--------------: | :--------: | :-----------: |
